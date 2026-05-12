@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataOps Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --surface: #111820;
+    --surface2: #1a2332;
+    --border: #1e2d42;
+    --border2: #2a3f5a;
+    --text: #e8f0f8;
+    --muted: #6b8aaa;
+    --accent: #00d4aa;
+    --accent2: #0099ff;
+    --accent3: #ff6b35;
+    --yellow: #ffd166;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Header ── */
+  header {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 32px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meta-item::before {
+    content: '▸';
+    color: var(--accent);
+  }
+
+  /* ── Status bar ── */
+  .status-bar {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 32px;
+    overflow-x: auto;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .dot.yellow { background: var(--yellow); animation-delay: 0.5s; }
+  .dot.blue { background: var(--accent2); animation-delay: 1s; }
+  .dot.orange { background: var(--accent3); animation-delay: 1.5s; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── Section ── */
+  section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Project cards ── */
+  .projects {
+    display: grid;
+    gap: 16px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card:hover {
+    border-color: var(--border2);
+    transform: translateX(4px);
+  }
+
+  .project-card:hover .card-arrow { opacity: 1; transform: translate(2px, -2px); }
+
+  .card-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+  }
+
+  .tag-pill.green { border-color: rgba(0,212,170,0.3); color: var(--accent); }
+  .tag-pill.blue { border-color: rgba(0,153,255,0.3); color: var(--accent2); }
+  .tag-pill.orange { border-color: rgba(255,107,53,0.3); color: var(--accent3); }
+  .tag-pill.yellow { border-color: rgba(255,209,102,0.3); color: var(--yellow); }
+
+  .card-arrow {
+    font-size: 18px;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: 2px;
+  }
+
+  /* ── Highlights ── */
+  .card-highlight {
+    background: var(--surface2);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .card-highlight strong { color: var(--accent); font-weight: 500; }
+
+  /* ── Skills grid ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .skill-list li {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .skill-list li::before {
+    content: '—';
+    color: var(--border2);
+    font-size: 11px;
+  }
+
+  /* ── Terminal block ── */
+  .terminal {
+    background: #060a0f;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 28px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .terminal-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .tb { width: 10px; height: 10px; border-radius: 50%; }
+  .tb-r { background: #ff5f57; }
+  .tb-y { background: #febc2e; }
+  .tb-g { background: #28c840; }
+
+  .t-prompt { color: var(--accent); }
+  .t-cmd { color: var(--text); }
+  .t-out { color: var(--muted); }
+  .t-ok { color: var(--accent); }
+  .t-warn { color: var(--yellow); }
+
+  /* ── Footer ── */
+  footer {
+    padding: 40px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+  }
+
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .github-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(0,212,170,0.3);
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .github-link:hover { background: rgba(0,212,170,0.08); }
+
+  @media (max-width: 600px) {
+    .project-card { grid-template-columns: 1fr; }
+    .card-arrow { display: none; }
+    header { padding: 48px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="tag">DataOps Portfolio</div>
+    <h1>Platform <span>Operations</span><br>& Data Engineering</h1>
+    <p class="subtitle">
+      Hands-on projects covering pipeline monitoring, streaming infrastructure,
+      cloud provisioning, and observability. Built for operational DataOps roles
+      supporting Snowflake, AWS, and data infrastructure.
+    </p>
+    <div class="header-meta">
+      <span class="meta-item">Manila, Philippines</span>
+      <span class="meta-item">AWS · Snowflake · Python</span>
+      <span class="meta-item">Open to work</span>
+    </div>
+  </header>
+
+  <div class="status-bar">
+    <div class="status-item"><span class="dot"></span>Airflow DAGs — monitored</div>
+    <div class="status-item"><span class="dot yellow"></span>MSK consumer lag — normal</div>
+    <div class="status-item"><span class="dot blue"></span>Terraform state — clean</div>
+    <div class="status-item"><span class="dot orange"></span>Prometheus alerts — 0 firing</div>
+  </div>
+
+  <section>
+    <div class="section-label">Projects — 01 / 04</div>
+
+    <div class="projects">
+
+      <a class="project-card" href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/airflow-dag-monitoring" target="_blank">
+        <div>
+          <div class="card-num">01 — Airflow</div>
+          <div class="card-title">Pipeline Health Monitor DAG</div>
+          <div class="card-desc">
+            Hourly Airflow DAG that validates S3 file arrival SLAs and row count
+            thresholds. Catches pipeline failures before stakeholders notice.
+            Includes a production-grade on-call runbook.
+          </div>
+          <div class="card-tags">
+            <span class="tag-pill green">Apache Airflow 2.x</span>
+            <span class="tag-pill green">Python</span>
+            <span class="tag-pill">AWS S3</span>
+            <span class="tag-pill">boto3</span>
+            <span class="tag-pill">XCom</span>
+          </div>
+          <div class="card-highlight">
+            <strong>Key pattern:</strong> SLA breach detection — raises exceptions on missing files, triggering email alerts before downstream systems are affected
+          </div>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <a class="project-card" href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/msk-kafka-ops" target="_blank">
+        <div>
+          <div class="card-num">02 — Kafka / MSK</div>
+          <div class="card-title">Consumer Lag Monitor & Alert Publisher</div>
+          <div class="card-desc">
+            Producer and consumer scripts for AWS MSK with per-partition lag calculation.
+            Publishes lag as CloudWatch custom metrics for dashboards and alarms.
+            Uses manual offset commits for reliable processing.
+          </div>
+          <div class="card-tags">
+            <span class="tag-pill blue">AWS MSK</span>
+            <span class="tag-pill blue">CloudWatch</span>
+            <span class="tag-pill">kafka-python</span>
+            <span class="tag-pill">Python</span>
+          </div>
+          <div class="card-highlight">
+            <strong>Key pattern:</strong> Manual offset commits — consumer only commits after successful processing, preventing silent message loss on crash
+          </div>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <a class="project-card" href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/terraform-aws-infra" target="_blank">
+        <div>
+          <div class="card-num">03 — Terraform</div>
+          <div class="card-title">DataOps AWS Landing Zone</div>
+          <div class="card-desc">
+            Infrastructure as Code for a full DataOps environment: S3 with lifecycle policies,
+            IAM roles for Snowflake storage integration (with ExternalId trust),
+            Lambda pipeline trigger, and SNS alerting. Remote state in S3.
+          </div>
+          <div class="card-tags">
+            <span class="tag-pill orange">Terraform</span>
+            <span class="tag-pill">AWS S3</span>
+            <span class="tag-pill">IAM</span>
+            <span class="tag-pill">Lambda</span>
+            <span class="tag-pill">Snowflake</span>
+          </div>
+          <div class="card-highlight">
+            <strong>Key pattern:</strong> Snowflake IAM trust with sts:ExternalId — prevents confused deputy attacks when Snowflake assumes your role
+          </div>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+      <a class="project-card" href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/prometheus-grafana-stack" target="_blank">
+        <div>
+          <div class="card-num">04 — Observability</div>
+          <div class="card-title">Prometheus + Grafana Monitoring Stack</div>
+          <div class="card-desc">
+            Docker Compose stack with Prometheus, Grafana, Alertmanager, and Node Exporter.
+            PromQL alert rules for DAG failures, high CPU, and disk pressure.
+            Grafana auto-provisioned with Prometheus datasource — one command to spin up.
+          </div>
+          <div class="card-tags">
+            <span class="tag-pill yellow">Prometheus</span>
+            <span class="tag-pill yellow">Grafana</span>
+            <span class="tag-pill">Alertmanager</span>
+            <span class="tag-pill">Docker Compose</span>
+            <span class="tag-pill">PromQL</span>
+          </div>
+          <div class="card-highlight">
+            <strong>Key pattern:</strong> Grafana provisioning via YAML — datasources and dashboards auto-configure on startup, no manual UI setup needed
+          </div>
+        </div>
+        <div class="card-arrow">↗</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Skills & tools</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Data Platform</div>
+        <ul class="skill-list">
+          <li>Snowflake (RBAC, warehouses)</li>
+          <li>Apache Airflow 2.x</li>
+          <li>AWS MSK / Kafka</li>
+          <li>S3 data landing zones</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud & Infra</div>
+        <ul class="skill-list">
+          <li>AWS S3, IAM, Lambda</li>
+          <li>CloudWatch metrics & alarms</li>
+          <li>Terraform IaC</li>
+          <li>Docker Compose</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Observability</div>
+        <ul class="skill-list">
+          <li>Prometheus + PromQL</li>
+          <li>Grafana dashboards</li>
+          <li>Alertmanager routing</li>
+          <li>Node Exporter</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Ops & Process</div>
+        <ul class="skill-list">
+          <li>Python automation (boto3)</li>
+          <li>Incident runbooks</li>
+          <li>GitHub Actions / Jenkins</li>
+          <li>ServiceNow (learning)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Stack in action</div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="tb tb-r"></div>
+        <div class="tb tb-y"></div>
+        <div class="tb tb-g"></div>
+      </div>
+      <div><span class="t-prompt">$ </span><span class="t-cmd">docker compose up -d</span></div>
+      <div><span class="t-out">✔ Container prometheus    Started</span></div>
+      <div><span class="t-out">✔ Container grafana       Started</span></div>
+      <div><span class="t-out">✔ Container alertmanager  Started</span></div>
+      <div><span class="t-out">✔ Container node_exporter Started</span></div>
+      <br>
+      <div><span class="t-prompt">$ </span><span class="t-cmd">airflow dags trigger pipeline_health_monitor</span></div>
+      <div><span class="t-ok">✔ DAG triggered — run_id: manual__2025-01-15T09:00:00</span></div>
+      <br>
+      <div><span class="t-prompt">$ </span><span class="t-cmd">terraform plan -var="env=prod"</span></div>
+      <div><span class="t-out">Plan: 7 to add, 0 to change, 0 to destroy.</span></div>
+      <div><span class="t-ok">✔ No unexpected changes detected</span></div>
+      <br>
+      <div><span class="t-prompt">$ </span><span class="t-cmd">python kafka_ops.py</span></div>
+      <div><span class="t-out">INFO — Consumer lag report: {0: 12, 1: 8, 2: 15}</span></div>
+      <div><span class="t-ok">INFO — Published 3 lag metrics to CloudWatch</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-text">Built for DataOps roles · Manila, PH</div>
+    <a class="github-link" href="https://github.com/YOUR_USERNAME/dataops-portfolio" target="_blank">View on GitHub ↗</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
