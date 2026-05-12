@@ -1,0 +1,43 @@
+groups:
+  - name: dataops_pipeline_alerts
+    rules:
+
+      # Fire if a host has been down for 2 minutes
+      - alert: InstanceDown
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} is down"
+          description: "{{ $labels.instance }} has been unreachable for more than 2 minutes."
+
+      # High CPU on pipeline hosts
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU on {{ $labels.instance }}"
+          description: "CPU usage is above 85% for more than 5 minutes."
+
+      # Disk filling up
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 15
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low disk space on {{ $labels.instance }}"
+          description: "Disk {{ $labels.device }} is below 15% free."
+
+      # Airflow DAG failure rate
+      - alert: AirflowDAGFailures
+        expr: increase(airflow_dag_run_failed_total[1h]) > 3
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Multiple Airflow DAG failures"
+          description: "More than 3 DAG failures in the last hour. Check Airflow UI."
