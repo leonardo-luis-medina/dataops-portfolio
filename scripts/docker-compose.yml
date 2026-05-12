@@ -1,0 +1,57 @@
+version: "3.8"
+
+networks:
+  dataops:
+    driver: bridge
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+services:
+
+  metrics-exporter:
+    image: python:3.11-slim
+    container_name: metrics-exporter
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: python scripts/metrics_exporter.py
+    ports:
+      - "8000:8000"
+    networks:
+      - dataops
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: prometheus
+    volumes:
+      - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=1d"
+    ports:
+      - "9090:9090"
+    networks:
+      - dataops
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.4.0
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: dataops123
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./metrics/grafana-datasource.yml:/etc/grafana/provisioning/datasources/prometheus.yml
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - dataops
+    restart: unless-stopped

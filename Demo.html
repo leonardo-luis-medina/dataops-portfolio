@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leonardo Medina — Live DataOps Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a0a; color: #f0ede8; font-family: 'IBM Plex Mono', monospace; min-height: 100vh; }
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+header {
+  border-bottom: 1px solid #1a1a1a; padding: 1.25rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); z-index: 10;
+}
+.logo { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: -1px; }
+.logo span { color: #00e5a0; }
+.header-meta { font-size: 11px; color: #555; letter-spacing: 0.08em; }
+.main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; position: relative; z-index: 1; }
+h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+.sub { font-size: 13px; color: #666; margin-bottom: 2.5rem; line-height: 1.7; }
+.sub em { color: #00e5a0; font-style: normal; }
+.tabs { display: flex; gap: 2px; margin-bottom: 2px; flex-wrap: wrap; }
+.tab {
+  padding: 10px 20px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: #1a1a1a; color: #555; border: 1px solid #222; cursor: pointer;
+  transition: all 0.2s; border-bottom: none; font-family: inherit;
+}
+.tab:hover { color: #aaa; background: #1f1f1f; }
+.tab.active { background: #111; color: #00e5a0; border-color: #2a2a2a; }
+.terminal { background: #111; border: 1px solid #1e1e1e; padding: 1.5rem; display: none; min-height: 380px; }
+.terminal.active { display: block; }
+.t-bar { display: flex; gap: 6px; margin-bottom: 1.25rem; align-items: center; }
+.td { width: 11px; height: 11px; border-radius: 50%; }
+.t-label { font-size: 11px; color: #333; margin-left: 8px; }
+.badge {
+  display: inline-block; font-size: 10px; padding: 3px 10px; border-radius: 2px;
+  background: rgba(0,229,160,0.08); color: #00e5a0; border: 1px solid rgba(0,229,160,0.2);
+  margin-bottom: 1.25rem; letter-spacing: 0.06em;
+}
+.line { font-size: 13px; line-height: 2; white-space: pre; }
+.cmd  { color: #00e5a0; }
+.ok   { color: #28c840; }
+.info { color: #6ab0f5; }
+.dim  { color: #444; }
+.num  { color: #ff6b35; }
+.cursor { display: inline-block; width: 8px; height: 15px; background: #00e5a0; vertical-align: middle; animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.controls { margin-top: 1.25rem; display: flex; gap: 1rem; align-items: center; }
+.run-btn {
+  padding: 9px 24px; font-family: inherit; font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; background: transparent; border: 1px solid #2a2a2a;
+  color: #555; cursor: pointer; transition: all 0.2s;
+}
+.run-btn:hover { border-color: #00e5a0; color: #00e5a0; background: rgba(0,229,160,0.05); }
+.run-btn.primary { background: #00e5a0; color: #000; border-color: #00e5a0; font-weight: 500; }
+.run-btn.primary:hover { background: #00c488; }
+.tip { font-size: 11px; color: #333; }
+.context-box {
+  margin-top: 1rem; padding: 1rem 1.25rem;
+  background: rgba(0,229,160,0.04); border-left: 2px solid #00e5a0;
+  font-size: 12px; color: #555; line-height: 1.7;
+}
+.context-box strong { color: #00e5a0; font-weight: 500; }
+footer { border-top: 1px solid #111; padding: 1.5rem 2rem; display: flex; justify-content: space-between; }
+footer p { font-size: 11px; color: #333; }
+footer a { color: #333; text-decoration: none; } footer a:hover { color: #00e5a0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">LM<span>.</span></div>
+  <div class="header-meta">DataOps Portfolio — Live Demo · Manila, PH</div>
+</header>
+
+<div class="main">
+  <h2>Live <span style="color:#00e5a0">Pipeline</span> Demo</h2>
+  <p class="sub">
+    Four working projects covering the full DataOps stack.
+    Click each tab and hit <em>Run demo</em> to see it in action.
+  </p>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('airflow')">01 — Airflow DAG</div>
+    <div class="tab" onclick="switchTab('kafka')">02 — Kafka / MSK</div>
+    <div class="tab" onclick="switchTab('terraform')">03 — Terraform IaC</div>
+    <div class="tab" onclick="switchTab('grafana')">04 — Prometheus + Grafana</div>
+  </div>
+
+  <div class="terminal active" id="tab-airflow">
+    <div class="t-bar">
+      <div class="td" style="background:#ff5f57"></div>
+      <div class="td" style="background:#febc2e"></div>
+      <div class="td" style="background:#28c840"></div>
+      <span class="t-label">airflow — pipeline_health_monitor DAG</span>
+    </div>
+    <div class="badge">Apache Airflow 2.x · Python · AWS S3 · boto3 · XCom</div>
+    <div id="airflow-out"></div>
+    <div class="controls">
+      <button class="run-btn primary" onclick="runTerminal('airflow')">Run demo ↵</button>
+      <span class="tip">Hourly DAG · SLA validation · on-call runbook</span>
+    </div>
+    <div class="context-box">
+      <strong>What this shows:</strong> An Airflow DAG that validates S3 file arrival SLAs and row count thresholds every hour.
+      Raises exceptions on failure, triggering alerts before downstream systems are affected.
+      Includes a production on-call runbook for incident response.
+    </div>
+  </div>
+
+  <div class="terminal" id="tab-kafka">
+    <div class="t-bar">
+      <div class="td" style="background:#ff5f57"></div>
+      <div class="td" style="background:#febc2e"></div>
+      <div class="td" style="background:#28c840"></div>
+      <span class="t-label">kafka_ops.py — MSK consumer lag monitor</span>
+    </div>
+    <div class="badge">AWS MSK · kafka-python · CloudWatch · Python · offset management</div>
+    <div id="kafka-out"></div>
+    <div class="controls">
+      <button class="run-btn primary" onclick="runTerminal('kafka')">Run demo ↵</button>
+      <span class="tip">Producer · consumer · lag monitoring · CloudWatch publish</span>
+    </div>
+    <div class="context-box">
+      <strong>What this shows:</strong> Producer and consumer scripts for AWS MSK with per-partition lag calculation.
+      Publishes lag as CloudWatch custom metrics. Uses manual offset commits so messages aren't lost if the consumer crashes mid-processing.
+    </div>
+  </div>
+
+  <div class="terminal" id="tab-terraform">
+    <div class="t-bar">
+      <div class="td" style="background:#ff5f57"></div>
+      <div class="td" style="background:#febc2e"></div>
+      <div class="td" style="background:#28c840"></div>
+      <span class="t-label">terraform — AWS DataOps landing zone</span>
+    </div>
+    <div class="badge">Terraform · AWS S3 · IAM · Lambda · SNS · Snowflake integration</div>
+    <div id="terraform-out"></div>
+    <div class="controls">
+      <button class="run-btn primary" onclick="runTerminal('terraform')">Run demo ↵</button>
+      <span class="tip">7 resources · remote state · Snowflake IAM trust</span>
+    </div>
+    <div class="context-box">
+      <strong>What this shows:</strong> Infrastructure as Code for a full DataOps environment — S3 with lifecycle policies,
+      IAM roles for Snowflake storage integration using sts:ExternalId, Lambda pipeline trigger, and SNS alerting.
+      Everything version-controlled and repeatable across environments.
+    </div>
+  </div>
+
+  <div class="terminal" id="tab-grafana">
+    <div class="t-bar">
+      <div class="td" style="background:#ff5f57"></div>
+      <div class="td" style="background:#febc2e"></div>
+      <div class="td" style="background:#28c840"></div>
+      <span class="t-label">docker compose — Prometheus + Grafana stack</span>
+    </div>
+    <div class="badge">Prometheus · Grafana · Docker Compose · PromQL · Python ETL · SQLite</div>
+    <div id="grafana-out"></div>
+    <div class="controls">
+      <button class="run-btn primary" onclick="runTerminal('grafana')">Run demo ↵</button>
+      <button class="run-btn" onclick="window.open('http://localhost:3001','_blank')">Open Grafana ↗</button>
+      <span class="tip">LIVE — running right now</span>
+    </div>
+    <div class="context-box">
+      <strong>What this shows:</strong> A fully working end-to-end observability pipeline.
+      Python generates sales data → ETL loads into SQLite → metrics exporter serves PromQL → 
+      Prometheus scrapes every 15s → Grafana live dashboard at localhost:3001.
+      <strong style="color:#28c840"> This one is actually running on this machine right now.</strong>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Leonardo Luis Medina · DataOps Portfolio · Manila, PH</p>
+  <p><a href="https://github.com/leonardo-luis-medina/dataops-portfolio" target="_blank">github ↗</a></p>
+</footer>
+
+<script>
+const scripts = {
+  airflow: [
+    { text: '$ airflow dags list', cls: 'cmd', delay: 0 },
+    { text: 'dag_id                  | schedule    | owner', cls: 'dim', delay: 400 },
+    { text: 'sales_pipeline          | @daily      | dataops', cls: 'info', delay: 600 },
+    { text: 'pipeline_health_monitor | @hourly     | dataops', cls: 'info', delay: 800 },
+    { text: '', cls: '', delay: 1000 },
+    { text: '$ airflow dags trigger pipeline_health_monitor', cls: 'cmd', delay: 1200 },
+    { text: '✔ DAG triggered — run_id: manual__2025-01-15T09:00:00', cls: 'ok', delay: 1800 },
+    { text: '', cls: '', delay: 2000 },
+    { text: '$ airflow tasks logs pipeline_health_monitor validate_s3_arrival', cls: 'cmd', delay: 2200 },
+    { text: '[09:00:12] INFO - Task started', cls: 'dim', delay: 2800 },
+    { text: '[09:00:13] INFO - Checking s3://dataops-bucket/sales/2025-01-15/', cls: 'dim', delay: 3100 },
+    { text: '[09:00:14] INFO - File found: sales_20250115.csv', cls: 'dim', delay: 3400 },
+    { text: '[09:00:14] INFO - Row count: 847 — threshold met (min: 500)', cls: 'dim', delay: 3700 },
+    { text: '[09:00:15] INFO - SLA: arrived 12min into window (max: 30min)', cls: 'dim', delay: 4000 },
+    { text: '✔ Task: validate_s3_arrival — SUCCESS', cls: 'ok', delay: 4400 },
+    { text: '✔ Task: run_etl            — SUCCESS', cls: 'ok', delay: 4700 },
+    { text: '✔ Task: notify_downstream  — SUCCESS', cls: 'ok', delay: 5000 },
+    { text: '', cls: '', delay: 5200 },
+    { text: '✔ DAG run complete — duration: 48s', cls: 'ok', delay: 5400 },
+  ],
+  kafka: [
+    { text: '$ python kafka_ops.py --mode produce --topic sales-events --count 100', cls: 'cmd', delay: 0 },
+    { text: 'INFO — Connecting to MSK broker...', cls: 'dim', delay: 600 },
+    { text: 'INFO — Producer ready', cls: 'dim', delay: 1000 },
+    { text: 'INFO — Sent 100 messages to sales-events', cls: 'info', delay: 1600 },
+    { text: '✔ Producer done — 100 events published', cls: 'ok', delay: 2000 },
+    { text: '', cls: '', delay: 2200 },
+    { text: '$ python kafka_ops.py --mode monitor', cls: 'cmd', delay: 2400 },
+    { text: 'INFO — Fetching consumer group offsets...', cls: 'dim', delay: 2900 },
+    { text: '', cls: '', delay: 3100 },
+    { text: 'Consumer lag report:', cls: 'info', delay: 3300 },
+    { text: '  Partition 0 — lag: 12  [OK]', cls: 'ok', delay: 3600 },
+    { text: '  Partition 1 — lag:  8  [OK]', cls: 'ok', delay: 3900 },
+    { text: '  Partition 2 — lag: 15  [OK]', cls: 'ok', delay: 4200 },
+    { text: '', cls: '', delay: 4400 },
+    { text: '✔ Published 3 lag metrics to CloudWatch', cls: 'ok', delay: 4700 },
+    { text: '✔ All partitions below threshold (100)', cls: 'ok', delay: 5000 },
+    { text: 'INFO — Next check in 60s...', cls: 'dim', delay: 5300 },
+  ],
+  terraform: [
+    { text: '$ terraform init', cls: 'cmd', delay: 0 },
+    { text: 'Initializing the backend...', cls: 'dim', delay: 500 },
+    { text: '✔ Successfully configured the backend "s3"', cls: 'ok', delay: 1000 },
+    { text: '✔ Terraform initialized successfully', cls: 'ok', delay: 1400 },
+    { text: '', cls: '', delay: 1600 },
+    { text: '$ terraform plan -var="env=prod"', cls: 'cmd', delay: 1800 },
+    { text: 'Refreshing state...', cls: 'dim', delay: 2300 },
+    { text: '', cls: '', delay: 2600 },
+    { text: '  + aws_s3_bucket.dataops_landing          will be created', cls: 'ok', delay: 2900 },
+    { text: '  + aws_s3_bucket_lifecycle.retention_90d  will be created', cls: 'ok', delay: 3100 },
+    { text: '  + aws_iam_role.snowflake_storage          will be created', cls: 'ok', delay: 3300 },
+    { text: '  + aws_iam_role_policy.snowflake_s3        will be created', cls: 'ok', delay: 3500 },
+    { text: '  + aws_lambda_function.pipeline_trigger    will be created', cls: 'ok', delay: 3700 },
+    { text: '  + aws_sns_topic.pipeline_alerts           will be created', cls: 'ok', delay: 3900 },
+    { text: '  + aws_sns_topic_subscription.email        will be created', cls: 'ok', delay: 4100 },
+    { text: '', cls: '', delay: 4300 },
+    { text: 'Plan: 7 to add, 0 to change, 0 to destroy.', cls: 'info', delay: 4500 },
+    { text: '✔ No unexpected changes detected', cls: 'ok', delay: 4800 },
+    { text: '', cls: '', delay: 5000 },
+    { text: '$ terraform apply -auto-approve', cls: 'cmd', delay: 5200 },
+    { text: '✔ Apply complete! Resources: 7 added, 0 changed, 0 destroyed.', cls: 'ok', delay: 6200 },
+  ],
+  grafana: [
+    { text: '$ python scripts/generate_data.py', cls: 'cmd', delay: 0 },
+    { text: '✔ Generated 100 rows → data/sales.csv', cls: 'ok', delay: 700 },
+    { text: '', cls: '', delay: 900 },
+    { text: '$ python scripts/etl.py', cls: 'cmd', delay: 1100 },
+    { text: 'INFO — Loading CSV into SQLite...', cls: 'dim', delay: 1600 },
+    { text: '✔ 100 rows inserted into sales.db', cls: 'ok', delay: 2000 },
+    { text: '✔ Total revenue: ₱3,185,321.24', cls: 'ok', delay: 2300 },
+    { text: '', cls: '', delay: 2500 },
+    { text: '$ docker compose up -d', cls: 'cmd', delay: 2700 },
+    { text: '✔ Container metrics-exporter  Started', cls: 'ok', delay: 3300 },
+    { text: '✔ Container prometheus         Started', cls: 'ok', delay: 3600 },
+    { text: '✔ Container grafana            Started', cls: 'ok', delay: 3900 },
+    { text: '', cls: '', delay: 4100 },
+    { text: '$ curl localhost:8000/metrics | grep dataops', cls: 'cmd', delay: 4300 },
+    { text: 'dataops_total_orders   100', cls: 'info', delay: 4900 },
+    { text: 'dataops_total_revenue  3185321.24', cls: 'info', delay: 5100 },
+    { text: 'dataops_total_quantity 523', cls: 'info', delay: 5300 },
+    { text: '', cls: '', delay: 5500 },
+    { text: '✔ Prometheus scraping :8000 every 15s', cls: 'ok', delay: 5700 },
+    { text: '✔ Grafana dashboard live at localhost:3001', cls: 'ok', delay: 6000 },
+  ]
+};
+
+let timers = {};
+
+function switchTab(name) {
+  const tabs = ['airflow','kafka','terraform','grafana'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', tabs[i] === name));
+  tabs.forEach(n => {
+    const el = document.getElementById('tab-' + n);
+    el.classList.toggle('active', n === name);
+  });
+}
+
+function runTerminal(name) {
+  const out = document.getElementById(name + '-out');
+  out.innerHTML = '';
+  if (timers[name]) timers[name].forEach(clearTimeout);
+  timers[name] = [];
+  scripts[name].forEach((line, i) => {
+    const t = setTimeout(() => {
+      const div = document.createElement('div');
+      div.className = 'line ' + (line.cls || '');
+      div.textContent = line.text;
+      out.appendChild(div);
+      if (i === scripts[name].length - 1) {
+        const cur = document.createElement('span');
+        cur.className = 'cursor';
+        div.appendChild(cur);
+      }
+    }, line.delay);
+    timers[name].push(t);
+  });
+}
+
+runTerminal('airflow');
+</script>
+</body>
+</html>
