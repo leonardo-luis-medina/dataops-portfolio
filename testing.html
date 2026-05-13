@@ -27,7 +27,7 @@ nav a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:0.05
 nav a:hover{color:var(--text);}
 nav .links{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;}
 .nav-cv{color:var(--accent)!important;border:1px solid rgba(0,229,160,0.3);padding:4px 12px;border-radius:2px;}
-.nav-cv:hover{background:rgba(0,229,160,0.1)!important;color:var(--accent)!important;}
+.nav-cv:hover{background:rgba(0,229,160,0.1)!important;}
 
 /* STATUS BAR */
 .status-bar{padding:1rem 0;border-bottom:1px solid var(--border);overflow:hidden;}
@@ -53,8 +53,7 @@ h1 .accent{color:var(--accent);}
 
 /* PROFILE PHOTO */
 .profile-photo{width:160px;height:160px;border-radius:4px;border:1px solid var(--border2);object-fit:cover;display:block;background:var(--bg3);}
-.profile-placeholder{width:160px;height:160px;border-radius:4px;border:2px dashed var(--border2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--bg2);cursor:pointer;transition:border-color 0.2s;}
-.profile-placeholder:hover{border-color:var(--accent);}
+.profile-placeholder{width:160px;height:160px;border-radius:4px;border:2px dashed var(--border2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--bg2);}
 .profile-placeholder svg{opacity:0.3;}
 .profile-placeholder span{font-size:10px;color:#444;letter-spacing:0.06em;text-align:center;}
 
@@ -77,11 +76,16 @@ section{padding:5rem 0;border-bottom:1px solid var(--border);}
 /* SCREENSHOT GRID */
 .screenshot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
 .screenshot-card{background:var(--bg2);padding:1.5rem;}
-.screenshot-card img{width:100%;border:1px solid var(--border);margin-bottom:1rem;border-radius:2px;display:block;cursor:zoom-in;transition:opacity 0.2s,transform 0.2s;}
+.screenshot-card img{width:100%;border:1px solid var(--border);margin-bottom:0.5rem;border-radius:2px;display:block;cursor:zoom-in;transition:opacity 0.2s,transform 0.2s;}
 .screenshot-card img:hover{opacity:0.85;transform:scale(1.01);}
-.screenshot-card h3{font-family:var(--display);font-size:13px;font-weight:700;color:var(--accent);margin-bottom:0.5rem;}
+.screenshot-card h3{font-family:var(--display);font-size:13px;font-weight:700;color:var(--accent);margin-bottom:0.5rem;margin-top:0.75rem;}
 .screenshot-card p{font-size:12px;color:var(--muted);line-height:1.6;}
-.zoom-hint{font-size:10px;color:#333;margin-top:6px;letter-spacing:0.04em;}
+.zoom-hint{font-size:10px;color:#333;letter-spacing:0.04em;}
+
+/* PLACEHOLDER SCREENSHOT */
+.screenshot-placeholder{width:100%;aspect-ratio:16/9;background:var(--bg3);border:1px dashed var(--border2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:0.5rem;border-radius:2px;}
+.screenshot-placeholder span{font-size:10px;color:#333;letter-spacing:0.06em;text-align:center;padding:0 1rem;}
+.screenshot-placeholder .filename{color:var(--accent);font-size:11px;}
 
 /* LIGHTBOX */
 .lightbox-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.93);backdrop-filter:blur(10px);align-items:center;justify-content:center;}
@@ -118,7 +122,6 @@ section{padding:5rem 0;border-bottom:1px solid var(--border);}
 .terminal-body .cmd{color:var(--accent);}
 .terminal-body .ok{color:#28c840;}
 .terminal-body .num{color:var(--accent2);}
-.terminal-body .comment{color:#555;}
 
 /* SKILLS */
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;border:1px solid var(--border);background:var(--border);}
@@ -143,9 +146,23 @@ footer p{font-size:12px;color:var(--muted);}
 footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
 footer a:hover{color:var(--accent);}
 
+/* EXPERIENCE */
+.exp-list{display:flex;flex-direction:column;gap:1px;}
+.exp-item{background:var(--bg2);border:1px solid var(--border);padding:1.5rem 2rem;display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:start;}
+.exp-date{font-size:11px;color:var(--muted);white-space:nowrap;padding-top:3px;min-width:140px;}
+.exp-role{font-family:var(--display);font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.exp-company{font-size:12px;color:var(--accent);margin-bottom:8px;}
+.exp-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+
 /* FADE IN */
 .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* SNow workflow */
+.workflow-bar{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin-bottom:1.5rem;}
+.wf-step{font-size:10px;letter-spacing:0.06em;padding:6px 12px;background:var(--bg3);border:1px solid var(--border);color:var(--muted);white-space:nowrap;}
+.wf-step.done{background:rgba(0,229,160,0.08);border-color:rgba(0,229,160,0.3);color:var(--accent);}
+.wf-arrow{font-size:10px;color:#333;padding:0 4px;}
 
 @media(max-width:650px){
   h1{font-size:2rem;letter-spacing:-1px;}
@@ -155,6 +172,7 @@ footer a:hover{color:var(--accent);}
   .project-arrow{display:none;}
   .project-tags,.project-pattern,.project-links,.terminal{margin-left:2rem;}
   .contact-grid{grid-template-columns:1fr;}
+  .exp-item{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -174,13 +192,13 @@ footer a:hover{color:var(--accent);}
   <div class="inner">
     <a href="#" class="logo">LM<span>.</span></a>
     <div class="links">
-      <a href="#architecture">Architecture</a>
+      <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#aws">AWS</a>
       <a href="#servicenow">ServiceNow</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
-      <a href="leonardo-medina-cv.pdf" download class="nav-cv">CV ↓</a>
+      <a href="documents/leonardo-medina-cv.pdf" download class="nav-cv">CV ↓</a>
     </div>
   </div>
 </nav>
@@ -193,14 +211,14 @@ footer a:hover{color:var(--accent);}
       <span class="status-item"><span class="ok">●</span> Jenkins — green :8080</span>
       <span class="status-item"><span class="ok">●</span> AWS Lambda — active</span>
       <span class="status-item"><span class="ok">●</span> S3 — connected</span>
-      <span class="status-item"><span class="ok">●</span> Airflow DAG — running</span>
+      <span class="status-item"><span class="ok">●</span> ServiceNow CHG0030001 — Closed</span>
       <span class="status-item"><span class="warn">●</span> Open to work — Manila, PH</span>
       <span class="status-item"><span class="ok">●</span> Grafana — live :3001</span>
       <span class="status-item"><span class="ok">●</span> Prometheus — scraping :9090</span>
       <span class="status-item"><span class="ok">●</span> Jenkins — green :8080</span>
       <span class="status-item"><span class="ok">●</span> AWS Lambda — active</span>
       <span class="status-item"><span class="ok">●</span> S3 — connected</span>
-      <span class="status-item"><span class="ok">●</span> Airflow DAG — running</span>
+      <span class="status-item"><span class="ok">●</span> ServiceNow CHG0030001 — Closed</span>
       <span class="status-item"><span class="warn">●</span> Open to work — Manila, PH</span>
     </div>
   </div>
@@ -214,7 +232,7 @@ footer a:hover{color:var(--accent);}
       <div>
         <div class="hero-tag">DataOps · Platform Operations · Data Engineering</div>
         <h1>Leonardo<br><span class="dim">Luis</span> <span class="accent">Medina</span></h1>
-        <p class="hero-sub">IT graduate with hands-on experience in full-stack development, cloud technologies, databases, and scripting. Familiar with AWS services, CI/CD concepts, API development, and system monitoring through academic projects, training, and self-learning. Adaptable, eager to learn, and interested in building reliable and scalable systems while growing in Data Engineering and DevOps environments.</p>
+        <p class="hero-sub">IT graduate with hands-on DataOps experience across pipeline monitoring, cloud infrastructure, observability, and change management. Built a full working stack covering every tool in the NICE CXone tech stack.</p>
         <div class="hero-meta">
           <span><span class="dot"></span>Muntinlupa, Manila PH</span>
           <span>AWS · Python · Docker</span>
@@ -222,12 +240,18 @@ footer a:hover{color:var(--accent);}
           <span>Open to work</span>
         </div>
         <div class="hero-btns">
-          <a href="demo.html" target="_blank" class="btn primary">View Live Demo ↗</a>
-          <a href="https://github.com/leonardo-luis-medina/dataops-portfolio" target="_blank" class="btn">GitHub ↗</a>
-          <a href="leonardo-medina-cv.pdf" download class="btn cv">Download CV ↓</a>
+          <a href="https://github.com/leonardo-luis-medina/dataops-portfolio" target="_blank" class="btn primary">GitHub ↗</a>
+          <a href="documents/leonardo-medina-cv.pdf" download class="btn cv">Download CV ↓</a>
+          <a href="mailto:leonardo.luis.medina99@gmail.com" class="btn">Contact ↗</a>
         </div>
       </div>
-       <div>
+
+      <!-- =====================================================
+           PROFILE PHOTO
+           Put your photo at: images/profile.jpg
+           Any size works — it will be cropped to a square
+           ===================================================== -->
+      <div>
         <img
           src="images/profile.jpg"
           alt="Leonardo Luis Medina"
@@ -242,6 +266,50 @@ footer a:hover{color:var(--accent);}
           <span>Add your photo:<br><strong style="color:#555">images/profile.jpg</strong></span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Experience & Training</div>
+    <div class="exp-list">
+
+      <div class="exp-item fade-in">
+        <div class="exp-date">Jul 2025 – Nov 2025</div>
+        <div>
+          <div class="exp-role">AWS Re/Start — Cloud Training</div>
+          <div class="exp-company">Full-time Cloud Program</div>
+          <div class="exp-desc">Intensive full-time cloud training covering AWS services (EC2, S3, VPC, IAM, CloudWatch), Linux, networking, Python scripting, and cloud troubleshooting methodologies.</div>
+        </div>
+      </div>
+
+      <div class="exp-item fade-in">
+        <div class="exp-date">Jun 2024 – Nov 2024</div>
+        <div>
+          <div class="exp-role">Associate Software Engineer — App/Cloud Support</div>
+          <div class="exp-company">Accenture</div>
+          <div class="exp-desc">Completed three internal bootcamps: Cloud Foundations, Software Engineering, and ServiceNow. Gained hands-on knowledge in cloud fundamentals, Java, Python, Linux, Agile workflows, GenAI, and IT service management.</div>
+        </div>
+      </div>
+
+      <div class="exp-item fade-in">
+        <div class="exp-date">Jan 2023 – Aug 2023</div>
+        <div>
+          <div class="exp-role">IT Support Intern</div>
+          <div class="exp-company">Philippine National Police — Muntinlupa</div>
+          <div class="exp-desc">Provided hardware and technical support to internal teams. Facilitated and supervised over 200 interns, ensuring smooth coordination. Maintained and improved the organizational database.</div>
+        </div>
+      </div>
+
+      <div class="exp-item fade-in">
+        <div class="exp-date">2019 – 2024</div>
+        <div>
+          <div class="exp-role">Bachelor of Science in Information Technology</div>
+          <div class="exp-company">Pamantasan ng Lungsod ng Muntinlupa</div>
+          <div class="exp-desc">NBP Reservation, Poblacion, Muntinlupa City.</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -282,7 +350,7 @@ footer a:hover{color:var(--accent);}
         <text x="262" y="164" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Live dashboard</text>
         <rect x="356" y="128" width="132" height="48" rx="5" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
         <text x="422" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#6ab0f5">Jenkins :8080</text>
-        <text x="422" y="164" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Health check pipeline</text>
+        <text x="422" y="164" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Pipeline orchestrator</text>
         <!-- AWS -->
         <rect x="508" y="128" width="148" height="48" rx="5" fill="#1a0d2e" stroke="#9b72e5" stroke-width="0.8"/>
         <text x="582" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#b89af5">S3 → Lambda</text>
@@ -359,7 +427,6 @@ footer a:hover{color:var(--accent);}
         </div>
         <div class="project-links">
           <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/airflow-dag-monitoring" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
@@ -379,15 +446,13 @@ footer a:hover{color:var(--accent);}
         <div class="terminal">
           <div class="terminal-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
           <div class="terminal-body">
-            <div><span class="cmd">$</span> python kafka_ops.py --mode monitor</div>
+            <div><span class="cmd">$</span> python kafka_ops.py</div>
             <div>INFO — Consumer lag: {<span class="num">0</span>: 12, <span class="num">1</span>: 8, <span class="num">2</span>: 15}</div>
             <div><span class="ok">✔</span> Published <span class="num">3</span> lag metrics to CloudWatch</div>
-            <div><span class="ok">✔</span> All partitions below threshold (<span class="num">100</span>)</div>
           </div>
         </div>
         <div class="project-links">
           <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/msk-kafka-ops" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
@@ -396,7 +461,7 @@ footer a:hover{color:var(--accent);}
           <div class="project-num">03</div>
           <div>
             <div class="project-title">Terraform AWS DataOps Landing Zone</div>
-            <div class="project-desc">Infrastructure as Code for a full DataOps environment: S3 with lifecycle policies, IAM roles for Snowflake storage integration, Lambda pipeline trigger, and SNS alerting.</div>
+            <div class="project-desc">Infrastructure as Code for a full DataOps environment: S3 with lifecycle policies, IAM roles for Snowflake storage integration, Lambda pipeline trigger, and SNS alerting. Remote state in S3.</div>
           </div>
           <div class="project-arrow">→</div>
         </div>
@@ -409,13 +474,11 @@ footer a:hover{color:var(--accent);}
           <div class="terminal-body">
             <div><span class="cmd">$</span> terraform plan -var="env=prod"</div>
             <div>Plan: <span class="num">7</span> to add, <span class="num">0</span> to change, <span class="num">0</span> to destroy.</div>
-            <div><span class="cmd">$</span> terraform apply -auto-approve</div>
             <div><span class="ok">✔</span> Apply complete! Resources: <span class="num">7</span> added</div>
           </div>
         </div>
         <div class="project-links">
           <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/terraform-aws-infra" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
@@ -423,15 +486,15 @@ footer a:hover{color:var(--accent);}
         <div class="project-header">
           <div class="project-num">04</div>
           <div>
-            <div class="project-title">Prometheus + Grafana Monitoring Stack</div>
-            <div class="project-desc">Fully working end-to-end observability pipeline. Generates sales data, loads into SQLite via ETL, exposes Prometheus metrics, and visualises live dashboards in Grafana. One command to spin up.</div>
+            <div class="project-title">Live DataOps Pipeline — Prometheus + Grafana</div>
+            <div class="project-desc">Fully connected end-to-end pipeline. Jenkins triggers ETL scripts, data loads into SQLite, metrics exporter serves Prometheus, Grafana displays live dashboard. 100 orders, ₱3.18M revenue, running now.</div>
           </div>
           <div class="project-arrow">→</div>
         </div>
         <div class="project-tags">
-          <span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Docker Compose</span><span class="tag">Python</span><span class="tag">SQLite</span><span class="tag">PromQL</span>
+          <span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Jenkins</span><span class="tag">Docker Compose</span><span class="tag">Python</span><span class="tag">PromQL</span>
         </div>
-        <div class="project-pattern"><strong>Key pattern:</strong> Full DataOps loop — data generation → ETL → metrics export → Prometheus scrape → Grafana dashboard. 100 orders, ₱3.18M revenue, live.</div>
+        <div class="project-pattern"><strong>Key pattern:</strong> Full DataOps loop — Jenkins → ETL → SQLite → metrics export → Prometheus scrape → Grafana dashboard. All connected, all live.</div>
         <div class="terminal">
           <div class="terminal-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
           <div class="terminal-body">
@@ -442,61 +505,275 @@ footer a:hover{color:var(--accent);}
         </div>
         <div class="project-links">
           <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/prometheus-grafana-stack" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- AWS -->
+  <!-- AWS LIVE SCREENSHOTS -->
+  <!--
+    =====================================================
+    AWS SCREENSHOTS — what to capture and where to save
+    =====================================================
+    Folder: screenshots/aws/
+
+    1. screenshots/aws/s3-bucket.png
+       → Go to AWS Console → S3 → click your bucket
+       → Take screenshot showing the bucket name and contents
+
+    2. screenshots/aws/lambda-function.png
+       → Go to AWS Console → Lambda → click dataops-pipeline-trigger
+       → Take screenshot showing the function overview page
+
+    3. screenshots/aws/cloudwatch-logs.png
+       → Go to AWS Console → CloudWatch → Log Groups
+       → Click /aws/lambda/dataops-pipeline-trigger
+       → Click the latest log stream
+       → Take screenshot showing the log entries
+
+    4. screenshots/aws/lambda-trigger.png
+       → On the Lambda function page, scroll up to see the S3 trigger
+       → Take screenshot showing "S3" connected to the Lambda diagram
+    =====================================================
+  -->
   <section id="aws">
     <div class="section-label">Live AWS Infrastructure</div>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">Real AWS resources running in ap-southeast-2 (Sydney). Event-driven pipeline — file upload to S3 automatically triggers Lambda, logged in CloudWatch. Click any screenshot to enlarge.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">Real AWS resources running live. Event-driven pipeline — file upload to S3 automatically triggers Lambda, logged in CloudWatch. Click any screenshot to enlarge.</p>
+
     <div class="screenshot-grid fade-in">
+
       <div class="screenshot-card">
-        <img src="screenshots/aws-s3-bucket.png" alt="AWS S3 Bucket" onclick="openLightbox(this.src,'AWS S3 Bucket — dataops-pipeline-leonardo-medina')"/>
+        <img
+          src="screenshots/aws/s3-bucket.png"
+          alt="AWS S3 Bucket"
+          onclick="openLightbox(this.src,'AWS S3 — dataops-pipeline-leonardo-medina bucket')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/aws/s3-bucket.png</span>
+          <span>AWS Console → S3 → your bucket</span>
+        </div>
         <p class="zoom-hint">↗ click to enlarge</p>
         <h3>S3 Bucket</h3>
-        <p>dataops-pipeline-leonardo-medina — stores pipeline CSV files with PUT event notifications triggering Lambda on every upload.</p>
+        <p>dataops-pipeline-leonardo-medina — stores pipeline CSV files. PUT event notifications trigger Lambda on every upload.</p>
       </div>
+
       <div class="screenshot-card">
-        <img src="screenshots/aws-lambda-function.png" alt="AWS Lambda" onclick="openLightbox(this.src,'AWS Lambda — dataops-pipeline-trigger')"/>
+        <img
+          src="screenshots/aws/lambda-function.png"
+          alt="AWS Lambda"
+          onclick="openLightbox(this.src,'AWS Lambda — dataops-pipeline-trigger function')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/aws/lambda-function.png</span>
+          <span>AWS Console → Lambda → dataops-pipeline-trigger</span>
+        </div>
         <p class="zoom-hint">↗ click to enlarge</p>
         <h3>Lambda Function</h3>
-        <p>dataops-pipeline-trigger — Python 3.12 serverless function. Fires automatically when files land in S3. Logs file name, size, and pipeline status.</p>
+        <p>dataops-pipeline-trigger — Python 3.12 serverless function. Fires automatically when files land in S3. Logs file details and pipeline status.</p>
       </div>
+
       <div class="screenshot-card">
-        <img src="screenshots/aws-cloudwatch-logs.png" alt="CloudWatch Logs" onclick="openLightbox(this.src,'AWS CloudWatch — Lambda invocation logs')"/>
+        <img
+          src="screenshots/aws/cloudwatch-logs.png"
+          alt="CloudWatch Logs"
+          onclick="openLightbox(this.src,'AWS CloudWatch — Lambda invocation logs')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/aws/cloudwatch-logs.png</span>
+          <span>CloudWatch → Log Groups → /aws/lambda/dataops-pipeline-trigger</span>
+        </div>
         <p class="zoom-hint">↗ click to enlarge</p>
         <h3>CloudWatch Logs</h3>
-        <p>Real-time logs showing every Lambda invocation — multiple automatic triggers fired on each S3 upload with no manual intervention.</p>
+        <p>Real-time Lambda invocation logs — every S3 upload triggers an automatic log entry showing file name, size, and pipeline status.</p>
       </div>
+
+      <div class="screenshot-card">
+        <img
+          src="screenshots/aws/lambda-trigger.png"
+          alt="Lambda S3 Trigger"
+          onclick="openLightbox(this.src,'AWS Lambda — S3 trigger configuration')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/aws/lambda-trigger.png</span>
+          <span>Lambda function page → scroll up to see S3 trigger diagram</span>
+        </div>
+        <p class="zoom-hint">↗ click to enlarge</p>
+        <h3>S3 → Lambda Trigger</h3>
+        <p>Event-driven architecture — S3 bucket is wired directly to Lambda. File upload = automatic pipeline trigger. No polling, no manual steps.</p>
+      </div>
+
     </div>
   </section>
 
-  <!-- SERVICENOW -->
+  <!-- SERVICENOW SCREENSHOTS -->
+  <!--
+    =====================================================
+    SERVICENOW SCREENSHOTS — what to capture and where to save
+    =====================================================
+    Folder: screenshots/servicenow/
+
+    1. screenshots/servicenow/cr-overview.png
+       → Open CHG0030001 in ServiceNow
+       → Take screenshot showing the TOP of the form:
+         - CHG number, State: Closed, Short Description
+         - The workflow bar: New→Assess→Authorize→Scheduled→Implement→Review→Closed
+         - Risk, Impact, Priority, Type fields
+
+    2. screenshots/servicenow/planning-tab.png
+       → Click the Planning tab
+       → Take screenshot showing Implementation Plan and Backout Plan filled in
+
+    3. screenshots/servicenow/approvals-tab.png
+       → Click the Approvals tab
+       → Take screenshot showing all 3 approvers (ITIL User, Beth Anglin, David Loo) as Approved
+
+    4. screenshots/servicenow/schedule-tab.png
+       → Click the Schedule tab
+       → Take screenshot showing Planned Start: 2026-05-13 23:00 and Planned End: 23:30
+
+    5. screenshots/servicenow/closure-tab.png
+       → Click the Closure Information tab
+       → Take screenshot showing Close code: Successful and closure notes
+
+    6. screenshots/servicenow/activity.png
+       → Scroll to the very bottom of the CR
+       → Take screenshot of the Activity section showing full audit trail
+    =====================================================
+  -->
   <section id="servicenow">
     <div class="section-label">ServiceNow — Change Management</div>
-    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">Trained in ServiceNow through Accenture bootcamp. Familiar with Change Requests, CAB approval workflows, and ITIL change management processes. Click screenshots to enlarge.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;max-width:580px;line-height:1.8;">Completed full Normal Change lifecycle in ServiceNow — from authoring to CAB approval to closure. CHG0030001 demonstrates the end-to-end change management process required for production deployments.</p>
+
+    <!-- Workflow bar -->
+    <div class="workflow-bar fade-in">
+      <span class="wf-step done">New</span>
+      <span class="wf-arrow">→</span>
+      <span class="wf-step done">Assess</span>
+      <span class="wf-arrow">→</span>
+      <span class="wf-step done">Authorize</span>
+      <span class="wf-arrow">→</span>
+      <span class="wf-step done">Scheduled</span>
+      <span class="wf-arrow">→</span>
+      <span class="wf-step done">Implement</span>
+      <span class="wf-arrow">→</span>
+      <span class="wf-step done">Review</span>
+      <span class="wf-arrow">→</span>
+      <span class="wf-step done">Closed ✓</span>
+    </div>
+
     <div class="screenshot-grid fade-in">
+
       <div class="screenshot-card">
-        <img src="screenshots/servicenow-cr.png" alt="ServiceNow Change Request" onclick="openLightbox(this.src,'ServiceNow — Change Request form')"/>
+        <img
+          src="screenshots/servicenow/cr-overview.png"
+          alt="Change Request Overview"
+          onclick="openLightbox(this.src,'ServiceNow — CHG0030001 Change Request Overview')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/servicenow/cr-overview.png</span>
+          <span>CHG0030001 top of form — workflow bar + all fields</span>
+        </div>
         <p class="zoom-hint">↗ click to enlarge</p>
-        <h3>Change Request (CR)</h3>
-        <p>Authoring and managing Change Requests in ServiceNow — filling in impact, risk, maintenance window, and rollback plan before CAB approval.</p>
+        <h3>CHG0030001 — Overview</h3>
+        <p>Normal change request for ETL pipeline deployment. Risk: Moderate, Impact: Medium. Full lifecycle completed from New to Closed.</p>
       </div>
-     
+
       <div class="screenshot-card">
-        <h3>Change Management Process</h3>
-        <p style="margin-bottom:1rem;">Familiar with the full CR lifecycle:</p>
-        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2.2;">
-          <li style="display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);padding:4px 0;"><span style="color:var(--accent)">›</span> Author CR with risk + rollback plan</li>
-          <li style="display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);padding:4px 0;"><span style="color:var(--accent)">›</span> Submit for CAB review and approval</li>
-          <li style="display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);padding:4px 0;"><span style="color:var(--accent)">›</span> Execute within maintenance window</li>
-          <li style="display:flex;align-items:center;gap:8px;padding:4px 0;"><span style="color:var(--accent)">›</span> Close CR with implementation notes</li>
-        </ul>
+        <img
+          src="screenshots/servicenow/planning-tab.png"
+          alt="Planning Tab"
+          onclick="openLightbox(this.src,'ServiceNow — Planning Tab: Implementation & Backout Plans')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/servicenow/planning-tab.png</span>
+          <span>Planning tab — Implementation Plan + Backout Plan</span>
+        </div>
+        <p class="zoom-hint">↗ click to enlarge</p>
+        <h3>Planning Tab</h3>
+        <p>Implementation plan with 8 steps. Backout plan with rollback procedure. Risk and impact analysis. Test plan with Grafana verification steps.</p>
       </div>
+
+      <div class="screenshot-card">
+        <img
+          src="screenshots/servicenow/approvals-tab.png"
+          alt="Approvals Tab"
+          onclick="openLightbox(this.src,'ServiceNow — CAB Approvals: 3 approvers approved')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/servicenow/approvals-tab.png</span>
+          <span>Approvals tab — ITIL User, Beth Anglin, David Loo all Approved</span>
+        </div>
+        <p class="zoom-hint">↗ click to enlarge</p>
+        <h3>CAB Approvals</h3>
+        <p>Three CAB approvers — ITIL User, Beth Anglin, David Loo — all approved before the change was allowed to proceed to implementation.</p>
+      </div>
+
+      <div class="screenshot-card">
+        <img
+          src="screenshots/servicenow/schedule-tab.png"
+          alt="Schedule Tab"
+          onclick="openLightbox(this.src,'ServiceNow — Maintenance Window: 23:00-23:30')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/servicenow/schedule-tab.png</span>
+          <span>Schedule tab — Planned Start/End: 23:00–23:30</span>
+        </div>
+        <p class="zoom-hint">↗ click to enlarge</p>
+        <h3>Maintenance Window</h3>
+        <p>Scheduled 23:00–23:30 maintenance window. Changes execute only within this window — the system blocks execution outside of it.</p>
+      </div>
+
+      <div class="screenshot-card">
+        <img
+          src="screenshots/servicenow/closure-tab.png"
+          alt="Closure Information"
+          onclick="openLightbox(this.src,'ServiceNow — Closure: Successful with notes')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/servicenow/closure-tab.png</span>
+          <span>Closure Information tab — Close code: Successful</span>
+        </div>
+        <p class="zoom-hint">↗ click to enlarge</p>
+        <h3>Closure — Successful</h3>
+        <p>Closed as Successful. Closure notes document Jenkins confirmation, Grafana metrics verified, no issues encountered during maintenance window.</p>
+      </div>
+
+      <div class="screenshot-card">
+        <img
+          src="screenshots/servicenow/activity.png"
+          alt="Activity Audit Trail"
+          onclick="openLightbox(this.src,'ServiceNow — Activity: Full audit trail with timestamps')"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="screenshot-placeholder" style="display:none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span class="filename">screenshots/servicenow/activity.png</span>
+          <span>Scroll to bottom of CR → Activity section</span>
+        </div>
+        <p class="zoom-hint">↗ click to enlarge</p>
+        <h3>Audit Trail</h3>
+        <p>Complete activity log — every state change timestamped. Used in post-incident reviews to trace exactly what changed, when, and by whom.</p>
+      </div>
+
     </div>
   </section>
 
@@ -545,23 +822,23 @@ footer a:hover{color:var(--accent);}
         </ul>
       </div>
       <div class="skill-group fade-in">
-        <h3>Training</h3>
+        <h3>Databases</h3>
         <ul>
-          <li>ACN — Cloud + ServiceNow</li>
-          <li>AWS Re/Start (2025)</li>
-          <li>Civil Service Eligible</li>
-          <li>SoloLearn — Python, SQL</li>
-          <li>IT Support Intern — PNP</li>
+          <li>SQL Server + SSMS</li>
+          <li>Supabase</li>
+          <li>SQLite</li>
+          <li>REST APIs</li>
+          <li>ASP.NET Core Web API</li>
         </ul>
       </div>
       <div class="skill-group fade-in">
-        <h3>Soft Skills</h3>
+        <h3>Training</h3>
         <ul>
-          <li>Clear incident comms</li>
-          <li>Async / remote collab</li>
+          <li>ACN — Cloud + ServiceNow</li>
+          <li>AWS Re/Start 2025</li>
+          <li>Civil Service Eligible</li>
+          <li>PNP IT Support Intern</li>
           <li>AI-augmented workflow</li>
-          <li>Fast learner</li>
-          <li>Team player</li>
         </ul>
       </div>
     </div>
@@ -597,7 +874,7 @@ footer a:hover{color:var(--accent);}
       </div>
     </div>
     <div style="margin-top:2rem;">
-      <a href="leonardo-medina-cv.pdf" download class="btn cv" style="font-size:13px;padding:10px 24px;">↓ Download Full CV (PDF)</a>
+      <a href="documents/leonardo-medina-cv.pdf" download class="btn cv" style="font-size:13px;padding:10px 24px;">↓ Download Full CV (PDF)</a>
     </div>
   </section>
 
@@ -609,7 +886,6 @@ footer a:hover{color:var(--accent);}
 </div>
 
 <script>
-  // FADE IN
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
@@ -617,7 +893,6 @@ footer a:hover{color:var(--accent);}
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // LIGHTBOX
   function openLightbox(src, caption) {
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox-caption').textContent = caption;
@@ -629,20 +904,6 @@ footer a:hover{color:var(--accent);}
     document.body.style.overflow = '';
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-
-  // PROFILE PHOTO — show placeholder if image fails
-  const profileImg = document.querySelector('.profile-photo');
-  const placeholder = document.getElementById('profile-placeholder');
-  if (profileImg) {
-    profileImg.addEventListener('error', () => {
-      profileImg.style.display = 'none';
-      if (placeholder) placeholder.style.display = 'flex';
-    });
-    profileImg.addEventListener('load', () => {
-      profileImg.style.display = 'block';
-      if (placeholder) placeholder.style.display = 'none';
-    });
-  }
 </script>
 </body>
 </html>
