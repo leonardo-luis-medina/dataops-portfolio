@@ -7,525 +7,133 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #1a1a1a;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.15);
-    --text: #f0ede8;
-    --muted: #888;
-    --accent: #00e5a0;
-    --accent2: #ff6b35;
-    --mono: 'IBM Plex Mono', monospace;
-    --display: 'Syne', sans-serif;
+    --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+    --text: #f0ede8; --muted: #888; --accent: #00e5a0; --accent2: #ff6b35;
+    --mono: 'IBM Plex Mono', monospace; --display: 'Syne', sans-serif;
   }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 14px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* GRID LINES BACKGROUND */
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 14px; line-height: 1.7; overflow-x: hidden; }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
+    content: ''; position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none; z-index: 0;
   }
-
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    position: relative;
-    z-index: 1;
-  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
 
   /* NAV */
-  nav {
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem 0;
-    position: sticky;
-    top: 0;
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(12px);
-    z-index: 100;
-  }
-
-  nav .inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 16px;
-    letter-spacing: -0.5px;
-    color: var(--text);
-    text-decoration: none;
-  }
-
+  nav { border-bottom: 1px solid var(--border); padding: 1.25rem 0; position: sticky; top: 0; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); z-index: 100; }
+  nav .inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .logo { font-family: var(--display); font-weight: 800; font-size: 16px; letter-spacing: -0.5px; color: var(--text); text-decoration: none; }
   .logo span { color: var(--accent); }
-
-  nav a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-
+  nav a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: 0.05em; transition: color 0.2s; }
   nav a:hover { color: var(--text); }
-  nav .links { display: flex; gap: 2rem; }
+  nav .links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+  /* STATUS BAR */
+  .status-bar { padding: 1rem 0; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .status-scroll { display: flex; gap: 3rem; animation: scroll-left 25s linear infinite; white-space: nowrap; }
+  @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .status-item { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.06em; color: var(--muted); flex-shrink: 0; }
+  .ok { color: var(--accent); }
+  .warn { color: var(--accent2); }
 
   /* HERO */
-  .hero {
-    padding: 6rem 0 4rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-
-  .hero-tag::before {
-    content: '';
-    display: inline-block;
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  h1 {
-    font-family: var(--display);
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -2px;
-    margin-bottom: 1.5rem;
-    color: var(--text);
-  }
-
+  .hero { padding: 6rem 0 4rem; border-bottom: 1px solid var(--border); }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 2rem; }
+  .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent); }
+  h1 { font-family: var(--display); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.5rem; }
   h1 .dim { color: var(--muted); }
   h1 .accent { color: var(--accent); }
-
-  .hero-sub {
-    font-size: 14px;
-    color: var(--muted);
-    max-width: 520px;
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
-  }
-
-  .hero-meta {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .hero-meta span {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .hero-meta .dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin-right: 6px;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-  }
-
-  /* PIPELINE STATUS BAR */
-  .status-bar {
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
-  }
-
-  .status-scroll {
-    display: flex;
-    gap: 3rem;
-    animation: scroll-left 20s linear infinite;
-    white-space: nowrap;
-  }
-
-  @keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .status-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    flex-shrink: 0;
-  }
-
-  .status-item .ok { color: var(--accent); }
-  .status-item .warn { color: var(--accent2); }
+  .hero-sub { font-size: 14px; color: var(--muted); max-width: 520px; line-height: 1.8; margin-bottom: 2rem; }
+  .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .hero-meta span { font-size: 11px; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+  .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 6px; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
 
   /* SECTIONS */
   section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 3rem; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
 
-  .section-label {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 3rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 16px; text-decoration: none; border: 1px solid var(--border2); color: var(--muted); transition: all 0.2s; border-radius: 2px; }
+  .btn:hover { color: var(--accent); border-color: rgba(0,229,160,0.4); background: rgba(0,229,160,0.05); }
+  .btn.primary { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 500; }
+  .btn.primary:hover { background: #00c488; border-color: #00c488; color: #000; }
 
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border2);
-  }
+  /* ARCHITECTURE */
+  .arch-box { border: 1px solid var(--border); background: var(--bg2); padding: 1.5rem; overflow-x: auto; }
+
+  /* SCREENSHOT GRID */
+  .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .screenshot-card { background: var(--bg2); padding: 1.5rem; }
+  .screenshot-card img { width: 100%; border: 1px solid var(--border); margin-bottom: 1rem; border-radius: 2px; display: block; }
+  .screenshot-card .img-placeholder { width: 100%; height: 140px; background: var(--bg3); border: 1px dashed var(--border2); margin-bottom: 1rem; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #333; }
+  .screenshot-card h3 { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+  .screenshot-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
   /* PROJECTS */
   .projects { display: flex; flex-direction: column; gap: 1px; }
-
-  .project {
-    border: 1px solid var(--border);
-    background: var(--bg2);
-    transition: border-color 0.3s, background 0.3s;
-    cursor: pointer;
-    overflow: hidden;
-  }
-
-  .project:hover {
-    border-color: var(--border2);
-    background: var(--bg3);
-  }
-
-  .project-header {
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1.5rem;
-    align-items: start;
-  }
-
-  .project-num {
-    font-family: var(--display);
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-top: 3px;
-  }
-
-  .project-title {
-    font-family: var(--display);
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-  }
-
-  .project-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 560px;
-  }
-
-  .project-arrow {
-    font-size: 18px;
-    color: var(--muted);
-    transition: color 0.2s, transform 0.2s;
-    margin-top: 2px;
-  }
-
-  .project:hover .project-arrow {
-    color: var(--accent);
-    transform: translateX(4px);
-  }
-
-  .project-tags {
-    padding: 0 2rem 2rem 5.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .tag {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border: 1px solid var(--border2);
-    color: var(--muted);
-    border-radius: 2px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .project:hover .tag {
-    color: var(--accent);
-    border-color: rgba(0,229,160,0.3);
-  }
-
-  /* KEY PATTERN BLOCK */
-  .project-pattern {
-    margin: 0 2rem 2rem 5.5rem;
-    padding: 1rem 1.25rem;
-    background: rgba(0,229,160,0.04);
-    border-left: 2px solid var(--accent);
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  .project-pattern strong {
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  .project-links {
-    padding: 0 2rem 2rem 5.5rem;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    text-decoration: none;
-    border: 1px solid var(--border2);
-    color: var(--muted);
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-    border-radius: 2px;
-  }
-
-  .btn:hover {
-    color: var(--accent);
-    border-color: rgba(0,229,160,0.4);
-    background: rgba(0,229,160,0.05);
-  }
-
-  .btn.primary {
-    background: var(--accent);
-    color: #000;
-    border-color: var(--accent);
-    font-weight: 500;
-  }
-
-  .btn.primary:hover {
-    background: #00c488;
-    border-color: #00c488;
-    color: #000;
-  }
-
-  /* TERMINAL BLOCK */
-  .terminal {
-    background: #0d0d0d;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 0 2rem 2rem 5.5rem;
-  }
-
-  .terminal-bar {
-    background: #1a1a1a;
-    padding: 8px 12px;
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-  }
-
+  .project { border: 1px solid var(--border); background: var(--bg2); transition: border-color 0.3s, background 0.3s; overflow: hidden; }
+  .project:hover { border-color: var(--border2); background: var(--bg3); }
+  .project-header { padding: 2rem; display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: start; }
+  .project-num { font-family: var(--display); font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; margin-top: 3px; }
+  .project-title { font-family: var(--display); font-size: 1.2rem; font-weight: 700; letter-spacing: -0.5px; color: var(--text); margin-bottom: 0.5rem; line-height: 1.2; }
+  .project-desc { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 560px; }
+  .project-arrow { font-size: 18px; color: var(--muted); transition: color 0.2s, transform 0.2s; margin-top: 2px; }
+  .project:hover .project-arrow { color: var(--accent); transform: translateX(4px); }
+  .project-tags { padding: 0 2rem 1.5rem 5.5rem; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border2); color: var(--muted); border-radius: 2px; transition: all 0.2s; }
+  .project:hover .tag { color: var(--accent); border-color: rgba(0,229,160,0.3); }
+  .project-pattern { margin: 0 2rem 1.5rem 5.5rem; padding: 1rem 1.25rem; background: rgba(0,229,160,0.04); border-left: 2px solid var(--accent); font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .project-pattern strong { color: var(--accent); font-weight: 500; }
+  .project-links { padding: 0 2rem 2rem 5.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .terminal { background: #0d0d0d; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 0 2rem 1.5rem 5.5rem; }
+  .terminal-bar { background: #1a1a1a; padding: 8px 12px; display: flex; gap: 6px; align-items: center; border-bottom: 1px solid var(--border); }
   .dot-r { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
   .dot-y { width: 10px; height: 10px; border-radius: 50%; background: #febc2e; }
   .dot-g { width: 10px; height: 10px; border-radius: 50%; background: #28c840; }
-
-  .terminal-body {
-    padding: 1rem 1.25rem;
-    font-size: 12px;
-    line-height: 1.8;
-    color: #aaa;
-  }
-
+  .terminal-body { padding: 1rem 1.25rem; font-size: 12px; line-height: 1.8; color: #aaa; }
   .terminal-body .cmd { color: var(--accent); }
   .terminal-body .ok { color: #28c840; }
   .terminal-body .num { color: var(--accent2); }
   .terminal-body .comment { color: #555; }
 
-  /* SKILLS GRID */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px;
-    border: 1px solid var(--border);
-    background: var(--border);
-  }
-
-  .skill-group {
-    background: var(--bg2);
-    padding: 1.5rem;
-  }
-
-  .skill-group h3 {
-    font-family: var(--display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; border: 1px solid var(--border); background: var(--border); }
+  .skill-group { background: var(--bg2); padding: 1.5rem; }
+  .skill-group h3 { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
   .skill-group ul { list-style: none; }
-
-  .skill-group li {
-    font-size: 13px;
-    color: var(--muted);
-    padding: 4px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .skill-group li::before {
-    content: '›';
-    color: var(--accent);
-    font-size: 16px;
-  }
-
+  .skill-group li { font-size: 12px; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .skill-group li::before { content: '›'; color: var(--accent); font-size: 16px; }
   .skill-group li:last-child { border-bottom: none; }
 
-  /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .about-text p {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.9;
-    margin-bottom: 1rem;
-  }
-
-  .about-text p em { color: var(--text); font-style: normal; }
-
-  .about-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    border: 1px solid var(--border);
-    background: var(--border);
-  }
-
-  .stat {
-    background: var(--bg2);
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
-
-  .stat-val {
-    font-family: var(--display);
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--text);
-    letter-spacing: -1px;
-  }
-
-  .stat-val.accent { color: var(--accent); }
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 1px solid var(--border); background: var(--border); }
+  .contact-item { background: var(--bg2); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .contact-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .contact-val { font-size: 12px; color: var(--text); text-align: right; }
+  .contact-val a { color: var(--accent); text-decoration: none; }
+  .contact-val a:hover { text-decoration: underline; }
 
   /* FOOTER */
-  footer {
-    padding: 3rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
+  footer { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
   footer p { font-size: 12px; color: var(--muted); }
-
-  footer a {
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
   footer a:hover { color: var(--accent); }
 
-  /* ANIMATIONS */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 600px) {
     h1 { font-size: 2.2rem; letter-spacing: -1px; }
-    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .project-header { grid-template-columns: auto 1fr; }
     .project-arrow { display: none; }
     .project-tags, .project-pattern, .project-links, .terminal { margin-left: 2rem; }
+    .contact-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -537,8 +145,10 @@
     <div class="links">
       <a href="#architecture">Architecture</a>
       <a href="#projects">Projects</a>
+      <a href="#aws">AWS</a>
+      <a href="#servicenow">ServiceNow</a>
       <a href="#skills">Skills</a>
-      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
       <a href="https://github.com/leonardo-luis-medina/dataops-portfolio" target="_blank">GitHub ↗</a>
     </div>
   </div>
@@ -547,166 +157,148 @@
 <div class="status-bar">
   <div class="container">
     <div class="status-scroll">
+      <span class="status-item"><span class="ok">●</span> Grafana — live :3001</span>
+      <span class="status-item"><span class="ok">●</span> Prometheus — scraping :9090</span>
+      <span class="status-item"><span class="ok">●</span> Jenkins — green :8080</span>
+      <span class="status-item"><span class="ok">●</span> AWS Lambda — active</span>
+      <span class="status-item"><span class="ok">●</span> S3 — connected</span>
       <span class="status-item"><span class="ok">●</span> Airflow DAG — running</span>
-      <span class="status-item"><span class="ok">●</span> Prometheus — scraping</span>
-      <span class="status-item"><span class="ok">●</span> Grafana — live</span>
-      <span class="status-item"><span class="ok">●</span> MSK consumer lag — normal</span>
-      <span class="status-item"><span class="ok">●</span> Terraform state — clean</span>
       <span class="status-item"><span class="warn">●</span> Open to work — Manila, PH</span>
+      <span class="status-item"><span class="ok">●</span> Grafana — live :3001</span>
+      <span class="status-item"><span class="ok">●</span> Prometheus — scraping :9090</span>
+      <span class="status-item"><span class="ok">●</span> Jenkins — green :8080</span>
+      <span class="status-item"><span class="ok">●</span> AWS Lambda — active</span>
+      <span class="status-item"><span class="ok">●</span> S3 — connected</span>
       <span class="status-item"><span class="ok">●</span> Airflow DAG — running</span>
-      <span class="status-item"><span class="ok">●</span> Prometheus — scraping</span>
-      <span class="status-item"><span class="ok">●</span> Grafana — live</span>
-      <span class="status-item"><span class="ok">●</span> MSK consumer lag — normal</span>
-      <span class="status-item"><span class="ok">●</span> Terraform state — clean</span>
       <span class="status-item"><span class="warn">●</span> Open to work — Manila, PH</span>
     </div>
   </div>
 </div>
 
 <div class="container">
+
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-tag">DataOps · Platform Operations · Data Engineering</div>
-    <h1>
-      Leonardo<br>
-      <span class="dim">Luis</span> <span class="accent">Medina</span>
-    </h1>
+    <h1>Leonardo<br><span class="dim">Luis</span> <span class="accent">Medina</span></h1>
     <p class="hero-sub">
-      Building hands-on DataOps experience across pipeline monitoring, streaming infrastructure,
-      cloud provisioning, and observability. Focused on keeping pipelines healthy,
-      deployments safe, and systems visible.
+      IT graduate with hands-on DataOps experience across pipeline monitoring, streaming infrastructure,
+      cloud provisioning, and observability. Built a full working stack covering every tool in the NICE CXone tech stack.
     </p>
     <div class="hero-meta">
-      <span><span class="dot"></span>Manila, Philippines</span>
-      <span>AWS · Snowflake · Python</span>
-      <span>5 months ACN training</span>
+      <span><span class="dot"></span>Muntinlupa, Manila PH</span>
+      <span>AWS · Python · Docker</span>
+      <span>ACN + AWS Re/Start Training</span>
       <span>Open to work</span>
     </div>
-    <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
       <a href="demo.html" target="_blank" class="btn primary">View Live Demo ↗</a>
       <a href="https://github.com/leonardo-luis-medina/dataops-portfolio" target="_blank" class="btn">GitHub ↗</a>
     </div>
   </section>
-</div>
 
-<div class="container">
+  <!-- ARCHITECTURE -->
   <section id="architecture">
     <div class="section-label">Pipeline Architecture</div>
     <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">
-      Five tools working together as one pipeline. Click any component to learn what it does.
+      Every component is live and running — from Python scripts to AWS cloud to local Docker containers.
     </p>
-    <div style="border:1px solid var(--border);background:var(--bg2);padding:1.5rem;overflow-x:auto;">
-      <svg width="100%" viewBox="0 0 680 520" role="img">
-        <title>DataOps Pipeline Architecture</title>
-        <desc>How all tools connect in the pipeline</desc>
+    <div class="arch-box fade-in">
+      <svg width="100%" viewBox="0 0 680 530" role="img">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
         </defs>
-
-        <!-- ROW LABELS -->
-        <text x="340" y="28" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">PYTHON SCRIPTS — data layer</text>
-
-        <!-- generate_data.py -->
-        <rect x="30" y="42" width="150" height="54" rx="6" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
-        <text x="105" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#00e5a0">generate_data.py</text>
-        <text x="105" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#558866">Creates 100 rows CSV</text>
-
-        <!-- arrow → etl -->
-        <line x1="180" y1="69" x2="218" y2="69" stroke="#00e5a0" stroke-width="1" marker-end="url(#arrow)"/>
-
-        <!-- etl.py -->
-        <rect x="218" y="42" width="140" height="54" rx="6" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
-        <text x="288" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#00e5a0">etl.py</text>
-        <text x="288" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#558866">CSV → SQLite DB</text>
-
-        <!-- arrow → metrics -->
-        <line x1="358" y1="69" x2="396" y2="69" stroke="#00e5a0" stroke-width="1" marker-end="url(#arrow)"/>
-
-        <!-- metrics_exporter.py -->
-        <rect x="396" y="42" width="170" height="54" rx="6" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
-        <text x="481" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#00e5a0">metrics_exporter.py</text>
-        <text x="481" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#558866">Serves metrics :8000</text>
+        <!-- ROW 1: Python Scripts -->
+        <text x="340" y="24" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">PYTHON SCRIPTS</text>
+        <rect x="20" y="34" width="150" height="50" rx="5" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="95" y="54" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#00e5a0">generate_data.py</text>
+        <text x="95" y="70" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#558866">Creates 100 rows CSV</text>
+        <line x1="170" y1="59" x2="206" y2="59" stroke="#00e5a0" stroke-width="1" marker-end="url(#arrow)"/>
+        <rect x="206" y="34" width="130" height="50" rx="5" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="271" y="54" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#00e5a0">etl.py</text>
+        <text x="271" y="70" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#558866">CSV → SQLite DB</text>
+        <line x1="336" y1="59" x2="372" y2="59" stroke="#00e5a0" stroke-width="1" marker-end="url(#arrow)"/>
+        <rect x="372" y="34" width="160" height="50" rx="5" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="452" y="54" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#00e5a0">metrics_exporter.py</text>
+        <text x="452" y="70" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#558866">Serves metrics :8000</text>
 
         <!-- DIVIDER -->
-        <line x1="30" y1="118" x2="650" y2="118" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4 4"/>
-        <text x="340" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">DOCKER CONTAINERS — running services</text>
+        <line x1="20" y1="105" x2="650" y2="105" stroke="#1c1c1c" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="170" y="122" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">DOCKER SERVICES</text>
+        <text x="530" y="122" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">AWS CLOUD</text>
 
-        <!-- Prometheus -->
-        <rect x="30" y="148" width="170" height="54" rx="6" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
-        <text x="115" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#6ab0f5">Prometheus :9090</text>
-        <text x="115" y="188" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">Scrapes :8000 every 15s</text>
+        <!-- Docker Services -->
+        <rect x="20" y="132" width="155" height="50" rx="5" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="97" y="152" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#6ab0f5">Prometheus :9090</text>
+        <text x="97" y="168" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Scrapes :8000 every 15s</text>
+        <rect x="195" y="132" width="155" height="50" rx="5" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="272" y="152" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#6ab0f5">Grafana :3001</text>
+        <text x="272" y="168" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Live dashboard</text>
+        <rect x="370" y="132" width="140" height="50" rx="5" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="440" y="152" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#6ab0f5">Jenkins :8080</text>
+        <text x="440" y="168" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Health check pipeline</text>
 
-        <!-- Grafana -->
-        <rect x="255" y="148" width="170" height="54" rx="6" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
-        <text x="340" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#6ab0f5">Grafana :3001</text>
-        <text x="340" y="188" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">Live dashboard</text>
+        <!-- AWS Services -->
+        <rect x="525" y="132" width="130" height="50" rx="5" fill="#1a0d2e" stroke="#9b72e5" stroke-width="0.8"/>
+        <text x="590" y="152" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#b89af5">S3 → Lambda</text>
+        <text x="590" y="168" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#6040a0">CloudWatch logs</text>
 
-        <!-- Jenkins -->
-        <rect x="480" y="148" width="170" height="54" rx="6" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
-        <text x="565" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#6ab0f5">Jenkins :8080</text>
-        <text x="565" y="188" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">Health check pipeline</text>
-
-        <!-- metrics → Prometheus (scrape) -->
-        <path d="M481 96 L481 128 L115 128 L115 148" fill="none" stroke="#3b8bd4" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-        <text x="280" y="124" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">scrapes</text>
-
-        <!-- Prometheus → Grafana -->
-        <line x1="200" y1="175" x2="253" y2="175" stroke="#3b8bd4" stroke-width="1" marker-end="url(#arrow)"/>
-        <text x="227" y="169" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">feeds</text>
-
-        <!-- Jenkins checks -->
-        <path d="M480 175 L450 175 L450 240 L115 240 L115 202" fill="none" stroke="#3b8bd4" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-        <path d="M480 175 L450 175 L450 248 L340 248 L340 202" fill="none" stroke="#3b8bd4" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-        <text x="390" y="254" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">health checks</text>
+        <!-- Connections -->
+        <path d="M452 84 L452 114 L97 114 L97 132" fill="none" stroke="#3b8bd4" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+        <line x1="175" y1="157" x2="193" y2="157" stroke="#3b8bd4" stroke-width="1" marker-end="url(#arrow)"/>
+        <text x="184" y="151" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">feeds</text>
+        <path d="M452 84 L600 84 L600 132" fill="none" stroke="#9b72e5" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
 
         <!-- DIVIDER -->
-        <line x1="30" y1="272" x2="650" y2="272" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4 4"/>
-        <text x="340" y="290" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">AIRFLOW — orchestration</text>
+        <line x1="20" y1="204" x2="650" y2="204" stroke="#1c1c1c" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="150" y="220" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">AIRFLOW</text>
+        <text x="500" y="220" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">CI/CD</text>
 
-        <!-- Airflow DAG -->
-        <rect x="200" y="302" width="280" height="54" rx="6" fill="#2a1f08" stroke="#ef9f27" stroke-width="0.8"/>
-        <text x="340" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#ef9f27">Airflow DAG — sales_pipeline</text>
-        <text x="340" y="342" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#8a6020">Runs generate → etl on schedule</text>
+        <!-- Airflow -->
+        <rect x="20" y="228" width="260" height="50" rx="5" fill="#2a1f08" stroke="#ef9f27" stroke-width="0.8"/>
+        <text x="150" y="248" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#ef9f27">Airflow DAG — sales_pipeline</text>
+        <text x="150" y="264" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#8a6020">Runs generate → etl on @daily schedule</text>
+        <path d="M150 228 L150 210 L95 210 L95 182" fill="none" stroke="#ef9f27" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
 
-        <!-- DAG → scripts -->
-        <path d="M340 302 L340 278 L105 278 L105 96" fill="none" stroke="#ef9f27" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-        <text x="180" y="274" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#8a6020">triggers</text>
+        <!-- Jenkins/GitHub Actions -->
+        <rect x="360" y="228" width="290" height="50" rx="5" fill="#1a1a1a" stroke="#555" stroke-width="0.8"/>
+        <text x="505" y="248" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#aaa">Jenkins + GitHub Actions</text>
+        <text x="505" y="264" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#555">CI/CD pipelines · health checks · workflows</text>
 
         <!-- DIVIDER -->
-        <line x1="30" y1="380" x2="650" y2="380" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4 4"/>
-        <text x="340" y="398" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">GITHUB + VERCEL — portfolio</text>
+        <line x1="20" y1="300" x2="650" y2="300" stroke="#1c1c1c" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="340" y="316" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">PORTFOLIO</text>
 
-        <!-- GitHub -->
-        <rect x="100" y="410" width="180" height="54" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="0.8"/>
-        <text x="190" y="432" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#aaa">GitHub Repo</text>
-        <text x="190" y="450" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">All code + CI pipeline</text>
-
-        <!-- Vercel -->
-        <rect x="400" y="410" width="180" height="54" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="0.8"/>
-        <text x="490" y="432" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#aaa">Vercel Portfolio</text>
-        <text x="490" y="450" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Live website + demo</text>
-
-        <!-- GitHub → Vercel -->
-        <line x1="280" y1="437" x2="398" y2="437" stroke="#444" stroke-width="1" marker-end="url(#arrow)"/>
-        <text x="340" y="431" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">deploys to</text>
+        <!-- GitHub + Vercel -->
+        <rect x="80" y="324" width="200" height="50" rx="5" fill="#111" stroke="#333" stroke-width="0.8"/>
+        <text x="180" y="344" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#777">GitHub Repo</text>
+        <text x="180" y="360" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#444">All code + CI pipeline</text>
+        <rect x="400" y="324" width="200" height="50" rx="5" fill="#111" stroke="#333" stroke-width="0.8"/>
+        <text x="500" y="344" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#777">Vercel Portfolio</text>
+        <text x="500" y="360" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#444">Live website + demo page</text>
+        <line x1="280" y1="349" x2="398" y2="349" stroke="#333" stroke-width="1" marker-end="url(#arrow)"/>
+        <text x="340" y="343" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#444">auto-deploys</text>
 
         <!-- Legend -->
-        <rect x="30" y="490" width="10" height="10" rx="2" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
-        <text x="46" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Python scripts</text>
-        <rect x="170" y="490" width="10" height="10" rx="2" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
-        <text x="186" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Docker services</text>
-        <rect x="310" y="490" width="10" height="10" rx="2" fill="#2a1f08" stroke="#ef9f27" stroke-width="0.8"/>
-        <text x="326" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Orchestration</text>
-        <rect x="440" y="490" width="10" height="10" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="0.8"/>
-        <text x="456" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Portfolio</text>
+        <rect x="20" y="400" width="8" height="8" rx="1" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="34" y="408" font-family="IBM Plex Mono,monospace" font-size="9" fill="#555">Python</text>
+        <rect x="110" y="400" width="8" height="8" rx="1" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="124" y="408" font-family="IBM Plex Mono,monospace" font-size="9" fill="#555">Docker</text>
+        <rect x="200" y="400" width="8" height="8" rx="1" fill="#1a0d2e" stroke="#9b72e5" stroke-width="0.8"/>
+        <text x="214" y="408" font-family="IBM Plex Mono,monospace" font-size="9" fill="#555">AWS</text>
+        <rect x="270" y="400" width="8" height="8" rx="1" fill="#2a1f08" stroke="#ef9f27" stroke-width="0.8"/>
+        <text x="284" y="408" font-family="IBM Plex Mono,monospace" font-size="9" fill="#555">Airflow</text>
+        <rect x="350" y="400" width="8" height="8" rx="1" fill="#111" stroke="#333" stroke-width="0.8"/>
+        <text x="364" y="408" font-family="IBM Plex Mono,monospace" font-size="9" fill="#555">Portfolio</text>
       </svg>
     </div>
   </section>
 
+  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-label">Projects — 04</div>
-
     <div class="projects">
 
       <!-- PROJECT 01 -->
@@ -715,38 +307,26 @@
           <div class="project-num">01</div>
           <div>
             <div class="project-title">Airflow Pipeline Health Monitor</div>
-            <div class="project-desc">
-              Hourly DAG that validates S3 file arrival SLAs and row count thresholds.
-              Catches pipeline failures before stakeholders notice.
-              Includes a production-grade on-call incident runbook.
-            </div>
+            <div class="project-desc">Hourly DAG that validates S3 file arrival SLAs and row count thresholds. Catches pipeline failures before stakeholders notice. Includes a production-grade on-call incident runbook.</div>
           </div>
           <div class="project-arrow">→</div>
         </div>
         <div class="project-tags">
-          <span class="tag">Apache Airflow 2.x</span>
-          <span class="tag">Python</span>
-          <span class="tag">AWS S3</span>
-          <span class="tag">boto3</span>
-          <span class="tag">XCom</span>
+          <span class="tag">Apache Airflow 2.x</span><span class="tag">Python</span><span class="tag">AWS S3</span><span class="tag">boto3</span><span class="tag">XCom</span>
         </div>
-        <div class="project-pattern">
-          <strong>Key pattern:</strong> SLA breach detection — raises exceptions on missing files,
-          triggering email alerts before downstream systems are affected.
-        </div>
+        <div class="project-pattern"><strong>Key pattern:</strong> SLA breach detection — raises exceptions on missing files, triggering alerts before downstream systems are affected.</div>
         <div class="terminal">
           <div class="terminal-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
           <div class="terminal-body">
             <div><span class="cmd">$</span> airflow dags trigger pipeline_health_monitor</div>
             <div><span class="ok">✔</span> DAG triggered — run_id: manual__2025-01-15T09:00:00</div>
-            <div><span class="comment"># Task: validate_s3_arrival</span></div>
             <div><span class="ok">✔</span> Found <span class="num">847</span> rows — threshold met</div>
             <div><span class="ok">✔</span> SLA: file arrived within <span class="num">12</span>min window</div>
           </div>
         </div>
         <div class="project-links">
           <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/airflow-dag-monitoring" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html#airflow" target="_blank" class="btn">Live Demo ↗</a>
+          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
@@ -756,37 +336,26 @@
           <div class="project-num">02</div>
           <div>
             <div class="project-title">MSK / Kafka Consumer Lag Monitor</div>
-            <div class="project-desc">
-              Producer and consumer scripts for AWS MSK with per-partition lag calculation.
-              Publishes custom CloudWatch metrics for dashboards and alarms.
-              Uses manual offset commits for reliable processing.
-            </div>
+            <div class="project-desc">Producer and consumer scripts for AWS MSK with per-partition lag calculation. Publishes custom CloudWatch metrics. Uses manual offset commits for reliable processing.</div>
           </div>
           <div class="project-arrow">→</div>
         </div>
         <div class="project-tags">
-          <span class="tag">AWS MSK</span>
-          <span class="tag">Kafka</span>
-          <span class="tag">CloudWatch</span>
-          <span class="tag">kafka-python</span>
-          <span class="tag">Python</span>
+          <span class="tag">AWS MSK</span><span class="tag">Kafka</span><span class="tag">CloudWatch</span><span class="tag">kafka-python</span><span class="tag">Python</span>
         </div>
-        <div class="project-pattern">
-          <strong>Key pattern:</strong> Manual offset commits — consumer only commits after successful
-          processing, preventing silent message loss on crash.
-        </div>
+        <div class="project-pattern"><strong>Key pattern:</strong> Manual offset commits — consumer only commits after successful processing, preventing silent message loss on crash.</div>
         <div class="terminal">
           <div class="terminal-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
           <div class="terminal-body">
             <div><span class="cmd">$</span> python kafka_ops.py --mode monitor</div>
-            <div>INFO — Consumer lag report: {<span class="num">0</span>: 12, <span class="num">1</span>: 8, <span class="num">2</span>: 15}</div>
+            <div>INFO — Consumer lag: {<span class="num">0</span>: 12, <span class="num">1</span>: 8, <span class="num">2</span>: 15}</div>
             <div><span class="ok">✔</span> Published <span class="num">3</span> lag metrics to CloudWatch</div>
             <div><span class="ok">✔</span> All partitions below threshold (<span class="num">100</span>)</div>
           </div>
         </div>
         <div class="project-links">
           <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/msk-kafka-ops" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html#kafka" target="_blank" class="btn">Live Demo ↗</a>
+          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
@@ -796,39 +365,26 @@
           <div class="project-num">03</div>
           <div>
             <div class="project-title">Terraform AWS DataOps Landing Zone</div>
-            <div class="project-desc">
-              Infrastructure as Code for a full DataOps environment: S3 with lifecycle policies,
-              IAM roles for Snowflake storage integration, Lambda pipeline trigger,
-              and SNS alerting. Remote state in S3.
-            </div>
+            <div class="project-desc">Infrastructure as Code for a full DataOps environment: S3 with lifecycle policies, IAM roles for Snowflake storage integration, Lambda pipeline trigger, and SNS alerting.</div>
           </div>
           <div class="project-arrow">→</div>
         </div>
         <div class="project-tags">
-          <span class="tag">Terraform</span>
-          <span class="tag">AWS S3</span>
-          <span class="tag">IAM</span>
-          <span class="tag">Lambda</span>
-          <span class="tag">Snowflake</span>
-          <span class="tag">SNS</span>
+          <span class="tag">Terraform</span><span class="tag">AWS S3</span><span class="tag">IAM</span><span class="tag">Lambda</span><span class="tag">Snowflake</span><span class="tag">SNS</span>
         </div>
-        <div class="project-pattern">
-          <strong>Key pattern:</strong> Snowflake IAM trust with sts:ExternalId —
-          prevents confused deputy attacks when Snowflake assumes your role.
-        </div>
+        <div class="project-pattern"><strong>Key pattern:</strong> Snowflake IAM trust with sts:ExternalId — prevents confused deputy attacks when Snowflake assumes your role.</div>
         <div class="terminal">
           <div class="terminal-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
           <div class="terminal-body">
             <div><span class="cmd">$</span> terraform plan -var="env=prod"</div>
             <div>Plan: <span class="num">7</span> to add, <span class="num">0</span> to change, <span class="num">0</span> to destroy.</div>
-            <div><span class="ok">✔</span> No unexpected changes detected</div>
             <div><span class="cmd">$</span> terraform apply -auto-approve</div>
             <div><span class="ok">✔</span> Apply complete! Resources: <span class="num">7</span> added</div>
           </div>
         </div>
         <div class="project-links">
           <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/terraform-aws-infra" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html#terraform" target="_blank" class="btn">Live Demo ↗</a>
+          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
@@ -838,45 +394,83 @@
           <div class="project-num">04</div>
           <div>
             <div class="project-title">Prometheus + Grafana Monitoring Stack</div>
-            <div class="project-desc">
-              Fully working end-to-end observability pipeline. Generates sales data,
-              loads into SQLite via ETL, exposes Prometheus metrics, and visualises
-              live dashboards in Grafana. One command to spin up.
-            </div>
+            <div class="project-desc">Fully working end-to-end observability pipeline. Generates sales data, loads into SQLite via ETL, exposes Prometheus metrics, and visualises live dashboards in Grafana. One command to spin up.</div>
           </div>
           <div class="project-arrow">→</div>
         </div>
         <div class="project-tags">
-          <span class="tag">Prometheus</span>
-          <span class="tag">Grafana</span>
-          <span class="tag">Docker Compose</span>
-          <span class="tag">Python</span>
-          <span class="tag">SQLite</span>
-          <span class="tag">PromQL</span>
-          <span class="tag">Airflow DAG</span>
+          <span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Docker Compose</span><span class="tag">Python</span><span class="tag">SQLite</span><span class="tag">PromQL</span>
         </div>
-        <div class="project-pattern">
-          <strong>Key pattern:</strong> Full DataOps loop — data generation → ETL → metrics export →
-          Prometheus scrape → Grafana dashboard. 100 orders, ₱3.18M revenue, live.
-        </div>
+        <div class="project-pattern"><strong>Key pattern:</strong> Full DataOps loop — data generation → ETL → metrics export → Prometheus scrape → Grafana dashboard. 100 orders, ₱3.18M revenue, live.</div>
         <div class="terminal">
           <div class="terminal-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
           <div class="terminal-body">
             <div><span class="cmd">$</span> docker compose up -d</div>
-            <div><span class="ok">✔</span> Container prometheus       Started</div>
-            <div><span class="ok">✔</span> Container metrics-exporter  Started</div>
-            <div><span class="ok">✔</span> Container grafana           Started</div>
-            <div><span class="comment"># Prometheus scraping :8000 every 15s</span></div>
-            <div>dataops_total_orders <span class="num">100</span></div>
-            <div>dataops_total_revenue <span class="num">3185321.24</span></div>
+            <div><span class="ok">✔</span> prometheus · metrics-exporter · grafana · jenkins — Started</div>
+            <div>dataops_total_orders <span class="num">100</span> | revenue <span class="num">₱3,185,321.24</span></div>
           </div>
         </div>
         <div class="project-links">
-          <a href="https://github.com/leonardo-luis-medana/dataops-portfolio/tree/main/prometheus-grafana-stack" target="_blank" class="btn primary">View Code ↗</a>
-          <a href="demo.html#grafana" target="_blank" class="btn">Live Demo ↗</a>
+          <a href="https://github.com/leonardo-luis-medina/dataops-portfolio/tree/main/prometheus-grafana-stack" target="_blank" class="btn primary">View Code ↗</a>
+          <a href="demo.html" target="_blank" class="btn">Live Demo ↗</a>
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- AWS LIVE -->
+  <section id="aws">
+    <div class="section-label">Live AWS Infrastructure</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">
+      Real AWS resources running in ap-southeast-2 (Sydney). Event-driven pipeline — file upload to S3 automatically triggers Lambda, logged in CloudWatch.
+    </p>
+    <div class="screenshot-grid fade-in">
+      <div class="screenshot-card">
+        <img src="screenshots/aws-s3-bucket.png" alt="AWS S3 Bucket" onerror="this.style.display='none'"/>
+        <h3>S3 Bucket</h3>
+        <p>dataops-pipeline-leonardo-medina — stores pipeline CSV files. Configured with PUT event notifications to trigger Lambda on every upload.</p>
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/aws-lambda-function.png" alt="AWS Lambda" onerror="this.style.display='none'"/>
+        <h3>Lambda Function</h3>
+        <p>dataops-pipeline-trigger — Python 3.12 serverless function. Fires automatically when files land in S3. Logs file name, size, and pipeline status.</p>
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/aws-cloudwatch-logs.png" alt="CloudWatch Logs" onerror="this.style.display='none'"/>
+        <h3>CloudWatch Logs</h3>
+        <p>Real-time logs showing every Lambda invocation. Multiple automatic triggers visible — fired on each S3 upload with no manual intervention.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICENOW -->
+  <section id="servicenow">
+    <div class="section-label">ServiceNow — Change Management</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">
+      Trained in ServiceNow through Accenture bootcamp. Familiar with Change Requests, CAB approval workflows, and ITIL change management processes.
+    </p>
+    <div class="screenshot-grid fade-in">
+      <div class="screenshot-card">
+        <img src="screenshots/servicenow-cr.png" alt="ServiceNow Change Request" onerror="this.style.display='none'"/>
+        <h3>Change Request (CR)</h3>
+        <p>Authoring and managing Change Requests in ServiceNow — filling in impact, risk, maintenance window, and rollback plan before CAB approval.</p>
+      </div>
+      <div class="screenshot-card">
+        <img src="screenshots/servicenow-dashboard.png" alt="ServiceNow Dashboard" onerror="this.style.display='none'"/>
+        <h3>ServiceNow Dashboard</h3>
+        <p>ITSM dashboard showing incident queues, change calendar, and approval workflows. Used during ACN training for IT service management.</p>
+      </div>
+      <div class="screenshot-card">
+        <h3>Change Management Process</h3>
+        <p style="margin-bottom:1rem;">Familiar with the full CR lifecycle:</p>
+        <ul style="list-style:none;font-size:12px;color:var(--muted);line-height:2;">
+          <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent)">›</span> Author CR with risk + rollback plan</li>
+          <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent)">›</span> Submit for CAB review and approval</li>
+          <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent)">›</span> Execute within maintenance window</li>
+          <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent)">›</span> Close CR with implementation notes</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -885,74 +479,136 @@
     <div class="section-label">Skills & Tools</div>
     <div class="skills-grid">
       <div class="skill-group fade-in">
-        <h3>Data Platform</h3>
+        <h3>DataOps Stack</h3>
         <ul>
-          <li>Snowflake (RBAC, warehouses)</li>
           <li>Apache Airflow 2.x</li>
-          <li>AWS MSK / Kafka</li>
-          <li>S3 data landing zones</li>
-        </ul>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Cloud & Infra</h3>
-        <ul>
-          <li>AWS S3, IAM, Lambda</li>
-          <li>CloudWatch metrics & alarms</li>
-          <li>Terraform IaC</li>
+          <li>Prometheus + Grafana</li>
           <li>Docker Compose</li>
-        </ul>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Observability</h3>
-        <ul>
-          <li>Prometheus + PromQL</li>
-          <li>Grafana dashboards</li>
-          <li>Alertmanager routing</li>
-          <li>Custom metrics export</li>
-        </ul>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Ops & Process</h3>
-        <ul>
-          <li>Python automation (boto3)</li>
-          <li>Incident runbooks</li>
+          <li>Jenkins pipelines</li>
           <li>GitHub Actions CI/CD</li>
-          <li>ServiceNow (learning)</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>AWS Cloud</h3>
+        <ul>
+          <li>S3 — storage + events</li>
+          <li>Lambda — serverless</li>
+          <li>CloudWatch — monitoring</li>
+          <li>IAM — roles + policies</li>
+          <li>EC2, VPC, Subnets</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Programming</h3>
+        <ul>
+          <li>Python — ETL + automation</li>
+          <li>SQL — queries + databases</li>
+          <li>JavaScript / TypeScript</li>
+          <li>Java, PHP, C#</li>
+          <li>Angular, React, Node.js</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Platforms</h3>
+        <ul>
+          <li>Terraform IaC</li>
+          <li>MSK / Kafka</li>
+          <li>ServiceNow (ITSM)</li>
+          <li>Microsoft Azure</li>
+          <li>Linux + CLI</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Training</h3>
+        <ul>
+          <li>ACN — Cloud + ServiceNow</li>
+          <li>AWS Re/Start (Jul–Nov 2025)</li>
+          <li>Civil Service Eligible</li>
+          <li>SoloLearn — Python, SQL</li>
+          <li>IT Support Intern — PNP</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
+        <h3>Soft Skills</h3>
+        <ul>
+          <li>Clear incident communication</li>
+          <li>Async / remote collaboration</li>
+          <li>AI-augmented productivity</li>
+          <li>Fast learner + adaptable</li>
+          <li>Team player</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-label">About</div>
-    <div class="about-grid">
-      <div class="about-text fade-in">
-        <p>
-          I'm <em>Leonardo Medina</em>, a DataOps and Platform Operations practitioner
-          based in <em>Manila, Philippines</em>. I've been building hands-on experience
-          through real working projects — not just tutorials.
-        </p>
-        <p>
-          Every project in this portfolio runs locally end-to-end.
-          The Grafana dashboard is live. The Airflow DAGs execute.
-          The Terraform plans apply. <em>Real pipelines, not demos.</em>
-        </p>
-        <p>
-          Background in <em>5 months ACN training</em> with AWS experience.
-          Currently targeting DataOps and Platform Ops roles where I can
-          support Snowflake, AWS, and data infrastructure at scale.
-        </p>
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid fade-in">
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <span class="contact-val"><a href="mailto:leonardo.luis.medina99@gmail.com">leonardo.luis.medina99@gmail.com</a></span>
       </div>
-      
+      <div class="contact-item">
+        <span class="contact-label">Mobile</span>
+        <span class="contact-val">0966-048-7394 · 0991-948-1946</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">GitHub</span>
+        <span class="contact-val"><a href="https://github.com/leonardo-luis-medina" target="_blank">github.com/leonardo-luis-medina</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">LinkedIn</span>
+        <span class="contact-val"><a href="https://linkedin.com/in/leonardo-luis-c-medina-9475192ab" target="_blank">linkedin.com/in/leonardo-luis-c-medina</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Location</span>
+        <span class="contact-val">Muntinlupa City, Manila PH</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Status</span>
+        <span class="contact-val" style="color:var(--accent)"><span class="dot"></span>Open to work</span>
+      </div>
+    </div>
   </section>
 
   <footer>
     <p>Leonardo Luis Medina — DataOps Portfolio · Manila, PH</p>
-    <p>
-      <a href="https://github.com/leonardo-luis-medina/dataops-portfolio" target="_blank">GitHub ↗</a>
-    </p>
+    <p><a href="https://github.com/leonardo-luis-medina/dataops-portfolio" target="_blank">GitHub ↗</a></p>
   </footer>
+
+</div>
+
+<style>
+  /* LIGHTBOX */
+  .lightbox-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center; cursor: pointer;
+  }
+  .lightbox-overlay.active { display: flex; }
+  .lightbox-inner { position: relative; max-width: 90vw; max-height: 90vh; cursor: default; }
+  .lightbox-inner img { max-width: 90vw; max-height: 85vh; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; display: block; }
+  .lightbox-close {
+    position: absolute; top: -40px; right: 0; font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; color: #888; cursor: pointer; letter-spacing: 0.08em;
+    padding: 6px 12px; border: 1px solid #333; border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .lightbox-close:hover { color: #00e5a0; border-color: #00e5a0; }
+  .lightbox-caption { text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #555; margin-top: 12px; letter-spacing: 0.06em; }
+  .screenshot-card img { cursor: zoom-in; transition: opacity 0.2s; }
+  .screenshot-card img:hover { opacity: 0.85; }
+  .screenshot-card .zoom-hint { font-size: 10px; color: #444; letter-spacing: 0.06em; margin-top: 6px; }
+</style>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <div class="lightbox-close" onclick="closeLightbox()">✕ close</div>
+    <img id="lightbox-img" src="" alt=""/>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
 </div>
 
 <script>
@@ -963,9 +619,36 @@
       }
     });
   }, { threshold: 0.1 });
-
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
 
+  // Lightbox
+  function openLightbox(src, caption) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox-caption').textContent = caption;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Make all screenshot images clickable
+  document.querySelectorAll('.screenshot-card img').forEach(img => {
+    img.addEventListener('click', () => {
+      const caption = img.closest('.screenshot-card').querySelector('h3').textContent;
+      openLightbox(img.src, caption);
+    });
+  });
+</script>
 </body>
 </html>
