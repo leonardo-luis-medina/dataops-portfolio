@@ -535,6 +535,7 @@
   <div class="inner">
     <a href="#" class="logo">LM<span>.</span></a>
     <div class="links">
+      <a href="#architecture">Architecture</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
       <a href="#about">About</a>
@@ -588,6 +589,121 @@
 </div>
 
 <div class="container">
+  <section id="architecture">
+    <div class="section-label">Pipeline Architecture</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">
+      Five tools working together as one pipeline. Click any component to learn what it does.
+    </p>
+    <div style="border:1px solid var(--border);background:var(--bg2);padding:1.5rem;overflow-x:auto;">
+      <svg width="100%" viewBox="0 0 680 520" role="img">
+        <title>DataOps Pipeline Architecture</title>
+        <desc>How all tools connect in the pipeline</desc>
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+
+        <!-- ROW LABELS -->
+        <text x="340" y="28" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">PYTHON SCRIPTS — data layer</text>
+
+        <!-- generate_data.py -->
+        <rect x="30" y="42" width="150" height="54" rx="6" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="105" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#00e5a0">generate_data.py</text>
+        <text x="105" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#558866">Creates 100 rows CSV</text>
+
+        <!-- arrow → etl -->
+        <line x1="180" y1="69" x2="218" y2="69" stroke="#00e5a0" stroke-width="1" marker-end="url(#arrow)"/>
+
+        <!-- etl.py -->
+        <rect x="218" y="42" width="140" height="54" rx="6" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="288" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#00e5a0">etl.py</text>
+        <text x="288" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#558866">CSV → SQLite DB</text>
+
+        <!-- arrow → metrics -->
+        <line x1="358" y1="69" x2="396" y2="69" stroke="#00e5a0" stroke-width="1" marker-end="url(#arrow)"/>
+
+        <!-- metrics_exporter.py -->
+        <rect x="396" y="42" width="170" height="54" rx="6" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="481" y="64" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#00e5a0">metrics_exporter.py</text>
+        <text x="481" y="82" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#558866">Serves metrics :8000</text>
+
+        <!-- DIVIDER -->
+        <line x1="30" y1="118" x2="650" y2="118" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="340" y="136" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">DOCKER CONTAINERS — running services</text>
+
+        <!-- Prometheus -->
+        <rect x="30" y="148" width="170" height="54" rx="6" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="115" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#6ab0f5">Prometheus :9090</text>
+        <text x="115" y="188" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">Scrapes :8000 every 15s</text>
+
+        <!-- Grafana -->
+        <rect x="255" y="148" width="170" height="54" rx="6" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="340" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#6ab0f5">Grafana :3001</text>
+        <text x="340" y="188" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">Live dashboard</text>
+
+        <!-- Jenkins -->
+        <rect x="480" y="148" width="170" height="54" rx="6" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="565" y="170" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#6ab0f5">Jenkins :8080</text>
+        <text x="565" y="188" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">Health check pipeline</text>
+
+        <!-- metrics → Prometheus (scrape) -->
+        <path d="M481 96 L481 128 L115 128 L115 148" fill="none" stroke="#3b8bd4" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+        <text x="280" y="124" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">scrapes</text>
+
+        <!-- Prometheus → Grafana -->
+        <line x1="200" y1="175" x2="253" y2="175" stroke="#3b8bd4" stroke-width="1" marker-end="url(#arrow)"/>
+        <text x="227" y="169" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">feeds</text>
+
+        <!-- Jenkins checks -->
+        <path d="M480 175 L450 175 L450 240 L115 240 L115 202" fill="none" stroke="#3b8bd4" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+        <path d="M480 175 L450 175 L450 248 L340 248 L340 202" fill="none" stroke="#3b8bd4" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+        <text x="390" y="254" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#3b6090">health checks</text>
+
+        <!-- DIVIDER -->
+        <line x1="30" y1="272" x2="650" y2="272" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="340" y="290" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">AIRFLOW — orchestration</text>
+
+        <!-- Airflow DAG -->
+        <rect x="200" y="302" width="280" height="54" rx="6" fill="#2a1f08" stroke="#ef9f27" stroke-width="0.8"/>
+        <text x="340" y="324" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#ef9f27">Airflow DAG — sales_pipeline</text>
+        <text x="340" y="342" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#8a6020">Runs generate → etl on schedule</text>
+
+        <!-- DAG → scripts -->
+        <path d="M340 302 L340 278 L105 278 L105 96" fill="none" stroke="#ef9f27" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+        <text x="180" y="274" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#8a6020">triggers</text>
+
+        <!-- DIVIDER -->
+        <line x1="30" y1="380" x2="650" y2="380" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="340" y="398" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#555" letter-spacing="2">GITHUB + VERCEL — portfolio</text>
+
+        <!-- GitHub -->
+        <rect x="100" y="410" width="180" height="54" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="0.8"/>
+        <text x="190" y="432" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#aaa">GitHub Repo</text>
+        <text x="190" y="450" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">All code + CI pipeline</text>
+
+        <!-- Vercel -->
+        <rect x="400" y="410" width="180" height="54" rx="6" fill="#1a1a1a" stroke="#444" stroke-width="0.8"/>
+        <text x="490" y="432" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="500" fill="#aaa">Vercel Portfolio</text>
+        <text x="490" y="450" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Live website + demo</text>
+
+        <!-- GitHub → Vercel -->
+        <line x1="280" y1="437" x2="398" y2="437" stroke="#444" stroke-width="1" marker-end="url(#arrow)"/>
+        <text x="340" y="431" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">deploys to</text>
+
+        <!-- Legend -->
+        <rect x="30" y="490" width="10" height="10" rx="2" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
+        <text x="46" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Python scripts</text>
+        <rect x="170" y="490" width="10" height="10" rx="2" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
+        <text x="186" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Docker services</text>
+        <rect x="310" y="490" width="10" height="10" rx="2" fill="#2a1f08" stroke="#ef9f27" stroke-width="0.8"/>
+        <text x="326" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Orchestration</text>
+        <rect x="440" y="490" width="10" height="10" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="0.8"/>
+        <text x="456" y="500" font-family="IBM Plex Mono,monospace" font-size="10" fill="#555">Portfolio</text>
+      </svg>
+    </div>
+  </section>
+
   <section id="projects">
     <div class="section-label">Projects — 04</div>
 
@@ -829,7 +945,6 @@
         </p>
       </div>
       
-    </div>
   </section>
 
   <footer>
