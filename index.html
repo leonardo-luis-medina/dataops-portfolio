@@ -66,10 +66,22 @@ h1 .accent{color:var(--accent);}
 .btn.cv{background:transparent;color:var(--accent);border-color:rgba(0,229,160,0.4);}
 .btn.cv:hover{background:rgba(0,229,160,0.08);}
 
+/* DS accent color */
+.btn.ds-primary{background:#7c3aed;color:#fff;border-color:#7c3aed;font-weight:500;}
+.btn.ds-primary:hover{background:#6d28d9;border-color:#6d28d9;color:#fff;}
+
 /* SECTIONS */
 section{padding:5rem 0;border-bottom:1px solid var(--border);}
 .section-label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:3rem;display:flex;align-items:center;gap:12px;}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border2);}
+.section-label.ds{color:#7c3aed;}
+.section-label.ds::after{background:rgba(124,58,237,0.3);}
+.section-label.ml{color:#f59e0b;}
+.section-label.ml::after{background:rgba(245,158,11,0.3);}
+.section-label.da{color:#3b82f6;}
+.section-label.da::after{background:rgba(59,130,246,0.3);}
+.section-label.gm{color:#ec4899;}
+.section-label.gm::after{background:rgba(236,72,153,0.3);}
 
 /* ARCHITECTURE */
 .arch-box{border:1px solid var(--border);background:var(--bg2);padding:1.5rem;overflow-x:auto;}
@@ -119,6 +131,27 @@ section{padding:5rem 0;border-bottom:1px solid var(--border);}
 .terminal-body .ok{color:#28c840;}
 .terminal-body .num{color:var(--accent2);}
 .terminal-body .comment{color:#555;}
+
+/* DS PROJECT VARIANTS */
+.project.ds{border-color:rgba(124,58,237,0.2);}
+.project.ds:hover{border-color:rgba(124,58,237,0.5);background:rgba(124,58,237,0.03);}
+.project.ds:hover .project-arrow{color:#7c3aed;}
+.project.ds:hover .tag{color:#7c3aed;border-color:rgba(124,58,237,0.3);}
+.project.ds .project-pattern{background:rgba(124,58,237,0.04);border-left-color:#7c3aed;}
+.project.ds .project-pattern strong{color:#7c3aed;}
+.project.ds .terminal-body .cmd{color:#7c3aed;}
+
+/* COMING SOON */
+.coming-soon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.coming-soon-card{background:var(--bg2);padding:2rem;display:flex;flex-direction:column;gap:1rem;position:relative;overflow:hidden;}
+.coming-soon-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,0.01) 8px,rgba(255,255,255,0.01) 16px);}
+.coming-soon-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:2px;width:fit-content;}
+.coming-soon-badge.ml{background:rgba(245,158,11,0.08);color:#f59e0b;border:1px solid rgba(245,158,11,0.2);}
+.coming-soon-badge.da{background:rgba(59,130,246,0.08);color:#3b82f6;border:1px solid rgba(59,130,246,0.2);}
+.coming-soon-badge.gm{background:rgba(236,72,153,0.08);color:#ec4899;border:1px solid rgba(236,72,153,0.2);}
+.coming-soon-title{font-family:var(--display);font-size:1.1rem;font-weight:700;letter-spacing:-0.5px;color:rgba(240,237,232,0.3);}
+.coming-soon-desc{font-size:12px;color:#333;line-height:1.7;}
+.coming-soon-hint{font-size:10px;letter-spacing:0.08em;color:#2a2a2a;text-transform:uppercase;margin-top:auto;}
 
 /* SKILLS */
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;border:1px solid var(--border);background:var(--border);}
@@ -176,8 +209,8 @@ footer a:hover{color:var(--accent);}
     <div class="links">
       <a href="#architecture">Architecture</a>
       <a href="#projects">Projects</a>
+      <a href="#datascience">Data Science</a>
       <a href="#aws">AWS</a>
-      <a href="#servicenow">ServiceNow</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
       <a href="leonardo-medina-cv.pdf" download class="nav-cv">CV ↓</a>
@@ -256,7 +289,6 @@ footer a:hover{color:var(--accent);}
             <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
         </defs>
-        <!-- ROW 1: Python -->
         <text x="340" y="22" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">PYTHON SCRIPTS</text>
         <rect x="20" y="32" width="148" height="48" rx="5" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
         <text x="94" y="52" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#00e5a0">generate_data.py</text>
@@ -269,11 +301,9 @@ footer a:hover{color:var(--accent);}
         <rect x="368" y="32" width="158" height="48" rx="5" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
         <text x="447" y="52" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#00e5a0">metrics_exporter.py</text>
         <text x="447" y="68" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#558866">Serves metrics :8000</text>
-        <!-- DIVIDER -->
         <line x1="20" y1="102" x2="650" y2="102" stroke="#1c1c1c" stroke-width="1" stroke-dasharray="4 4"/>
         <text x="160" y="118" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">DOCKER</text>
         <text x="500" y="118" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">AWS CLOUD</text>
-        <!-- Docker -->
         <rect x="20" y="128" width="148" height="48" rx="5" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
         <text x="94" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#6ab0f5">Prometheus :9090</text>
         <text x="94" y="164" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Scrapes :8000 / 15s</text>
@@ -283,31 +313,24 @@ footer a:hover{color:var(--accent);}
         <rect x="356" y="128" width="132" height="48" rx="5" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
         <text x="422" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#6ab0f5">Jenkins :8080</text>
         <text x="422" y="164" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#3b6090">Health check pipeline</text>
-        <!-- AWS -->
         <rect x="508" y="128" width="148" height="48" rx="5" fill="#1a0d2e" stroke="#9b72e5" stroke-width="0.8"/>
         <text x="582" y="148" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#b89af5">S3 → Lambda</text>
         <text x="582" y="164" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#6040a0">CloudWatch logs</text>
-        <!-- Connections -->
         <path d="M447 80 L447 110 L94 110 L94 128" fill="none" stroke="#3b8bd4" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
         <line x1="168" y1="152" x2="186" y2="152" stroke="#3b8bd4" stroke-width="1" marker-end="url(#arrow)"/>
         <path d="M447 80 L582 80 L582 128" fill="none" stroke="#9b72e5" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-        <!-- DIVIDER -->
         <line x1="20" y1="198" x2="650" y2="198" stroke="#1c1c1c" stroke-width="1" stroke-dasharray="4 4"/>
         <text x="140" y="214" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">AIRFLOW</text>
         <text x="500" y="214" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">CI/CD</text>
-        <!-- Airflow -->
         <rect x="20" y="222" width="250" height="48" rx="5" fill="#2a1f08" stroke="#ef9f27" stroke-width="0.8"/>
         <text x="145" y="242" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#ef9f27">Airflow DAG — sales_pipeline</text>
         <text x="145" y="258" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#8a6020">Runs generate → etl on @daily schedule</text>
         <path d="M145 222 L145 205 L94 205 L94 176" fill="none" stroke="#ef9f27" stroke-width="0.8" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
-        <!-- CI/CD -->
         <rect x="350" y="222" width="306" height="48" rx="5" fill="#1a1a1a" stroke="#444" stroke-width="0.8"/>
         <text x="503" y="242" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#888">Jenkins + GitHub Actions</text>
         <text x="503" y="258" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#444">CI/CD pipelines · health checks</text>
-        <!-- DIVIDER -->
         <line x1="20" y1="292" x2="650" y2="292" stroke="#1c1c1c" stroke-width="1" stroke-dasharray="4 4"/>
         <text x="340" y="308" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" fill="#444" letter-spacing="2">PORTFOLIO</text>
-        <!-- GitHub + Vercel -->
         <rect x="80" y="316" width="200" height="48" rx="5" fill="#111" stroke="#2a2a2a" stroke-width="0.8"/>
         <text x="180" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#666">GitHub Repo</text>
         <text x="180" y="352" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#333">All code + screenshots + CV</text>
@@ -315,7 +338,6 @@ footer a:hover{color:var(--accent);}
         <text x="500" y="336" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#666">Vercel Portfolio</text>
         <text x="500" y="352" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="#333">Live website + demo page</text>
         <line x1="280" y1="340" x2="398" y2="340" stroke="#2a2a2a" stroke-width="1" marker-end="url(#arrow)"/>
-        <!-- Legend -->
         <rect x="20" y="395" width="8" height="8" rx="1" fill="#0d2e22" stroke="#00e5a0" stroke-width="0.8"/>
         <text x="34" y="403" font-family="IBM Plex Mono,monospace" font-size="9" fill="#444">Python</text>
         <rect x="100" y="395" width="8" height="8" rx="1" fill="#0d1f35" stroke="#3b8bd4" stroke-width="0.8"/>
@@ -330,9 +352,9 @@ footer a:hover{color:var(--accent);}
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- DATAOPS PROJECTS -->
   <section id="projects">
-    <div class="section-label">Projects — 04</div>
+    <div class="section-label">DataOps & Data Engineering — 04</div>
     <div class="projects">
 
       <div class="project fade-in">
@@ -449,6 +471,111 @@ footer a:hover{color:var(--accent);}
     </div>
   </section>
 
+  <!-- DATA SCIENCE PROJECTS -->
+  <section id="datascience">
+    <div class="section-label ds">Data Science — 01</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">Interactive data science projects built with Python, Pandas, and Streamlit. Upload your own data or explore with sample datasets.</p>
+    <div class="projects">
+
+      <div class="project ds fade-in">
+        <div class="project-header">
+          <div class="project-num" style="color:#7c3aed;">01</div>
+          <div>
+            <div class="project-title">Sales Dashboard</div>
+            <div class="project-desc">Interactive sales analytics dashboard built with Python and Streamlit. Upload any CSV to visualise revenue trends, top products, and order volume — or explore with built-in sample data. Deployeed live on Streamlit Community Cloud.</div>
+          </div>
+          <div class="project-arrow">→</div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">CSV</span>
+        </div>
+        <div class="project-pattern" style="background:rgba(124,58,237,0.04);border-left-color:#7c3aed;">
+          <strong style="color:#7c3aed;">Key feature:</strong> Upload your own CSV or use sample data — the dashboard updates all charts and KPIs instantly. Zero setup required for the viewer.
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div></div>
+          <div class="terminal-body">
+            <div><span class="cmd" style="color:#7c3aed;">$</span> streamlit run app.py</div>
+            <div><span class="ok">✔</span> Dashboard running on http://localhost:8501</div>
+            <div><span class="ok">✔</span> Total Revenue: <span class="num">₱1,965,000.00</span></div>
+            <div><span class="ok">✔</span> Top Product: <span class="num">Laptop</span> · Orders: <span class="num">89</span></div>
+          </div>
+        </div>
+        <div class="project-links">
+  <a href="https://lm-sales-dashboard.streamlit.app/" target="_blank" class="btn ds-primary">View Live App ↗</a>
+  <a href="https://github.com/leonardo-luis-medina/sales-dashboard-py" target="_blank" class="btn">GitHub ↗</a>
+</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MACHINE LEARNING — COMING SOON -->
+  <section id="ml">
+    <div class="section-label ml">Machine Learning — Coming Soon</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">ML projects in progress — predictive models, classifiers, and neural networks.</p>
+    <div class="coming-soon-grid fade-in">
+      <div class="coming-soon-card">
+        <span class="coming-soon-badge ml">● In Progress</span>
+        <div class="coming-soon-title">House Price Predictor</div>
+        <div class="coming-soon-desc">Regression model predicting property prices from location, size, and features using Scikit-learn.</div>
+        <div class="coming-soon-hint">// coming soon</div>
+      </div>
+      <div class="coming-soon-card">
+        <span class="coming-soon-badge ml">● Planned</span>
+        <div class="coming-soon-title">Sentiment Analyzer</div>
+        <div class="coming-soon-desc">NLP classifier for positive/negative/neutral sentiment on text input using trained ML models.</div>
+        <div class="coming-soon-hint">// coming soon</div>
+      </div>
+      <div class="coming-soon-card">
+        <span class="coming-soon-badge ml">● Planned</span>
+        <div class="coming-soon-title">Image Classifier</div>
+        <div class="coming-soon-desc">Upload a photo and let the model identify it — built with TensorFlow or PyTorch.</div>
+        <div class="coming-soon-hint">// coming soon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA ANALYTICS — COMING SOON -->
+  <section id="analytics">
+    <div class="section-label da">Data Analytics — Coming Soon</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">Business intelligence and analytics dashboards — turning raw data into actionable insights.</p>
+    <div class="coming-soon-grid fade-in">
+      <div class="coming-soon-card">
+        <span class="coming-soon-badge da">● Planned</span>
+        <div class="coming-soon-title">SQL Analytics Dashboard</div>
+        <div class="coming-soon-desc">Complex SQL queries visualised — cohort analysis, funnel metrics, and retention reporting.</div>
+        <div class="coming-soon-hint">// coming soon</div>
+      </div>
+      <div class="coming-soon-card">
+        <span class="coming-soon-badge da">● Planned</span>
+        <div class="coming-soon-title">E-Commerce Insights</div>
+        <div class="coming-soon-desc">End-to-end analytics pipeline from raw transaction data to executive-ready business dashboard.</div>
+        <div class="coming-soon-hint">// coming soon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES — COMING SOON -->
+  <section id="games">
+    <div class="section-label gm">Games — Coming Soon</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:2rem;max-width:580px;line-height:1.8;">Fun side projects — games built with Python and web technologies.</p>
+    <div class="coming-soon-grid fade-in">
+      <div class="coming-soon-card">
+        <span class="coming-soon-badge gm">● Planned</span>
+        <div class="coming-soon-title">Project TBA</div>
+        <div class="coming-soon-desc">Something fun is being built here. Stay tuned.</div>
+        <div class="coming-soon-hint">// coming soon</div>
+      </div>
+      <div class="coming-soon-card">
+        <span class="coming-soon-badge gm">● Planned</span>
+        <div class="coming-soon-title">Project TBA</div>
+        <div class="coming-soon-desc">Another game project in the works. More details soon.</div>
+        <div class="coming-soon-hint">// coming soon</div>
+      </div>
+    </div>
+  </section>
+
   <!-- AWS -->
   <section id="aws">
     <div class="section-label">Live AWS Infrastructure</div>
@@ -486,7 +613,6 @@ footer a:hover{color:var(--accent);}
         <h3>Change Request (CR)</h3>
         <p>Authoring and managing Change Requests in ServiceNow — filling in impact, risk, maintenance window, and rollback plan before CAB approval.</p>
       </div>
-     
       <div class="screenshot-card">
         <h3>Change Management Process</h3>
         <p style="margin-bottom:1rem;">Familiar with the full CR lifecycle:</p>
@@ -525,6 +651,16 @@ footer a:hover{color:var(--accent);}
         </ul>
       </div>
       <div class="skill-group fade-in">
+        <h3>Data Science</h3>
+        <ul>
+          <li>Python — Pandas, NumPy</li>
+          <li>Matplotlib, Seaborn</li>
+          <li>Streamlit dashboards</li>
+          <li>Scikit-learn (learning)</li>
+          <li>Jupyter Notebooks</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
         <h3>Programming</h3>
         <ul>
           <li>Python — ETL + automation</li>
@@ -552,16 +688,6 @@ footer a:hover{color:var(--accent);}
           <li>Civil Service Eligible</li>
           <li>SoloLearn — Python, SQL</li>
           <li>IT Support Intern — PNP</li>
-        </ul>
-      </div>
-      <div class="skill-group fade-in">
-        <h3>Soft Skills</h3>
-        <ul>
-          <li>Clear incident comms</li>
-          <li>Async / remote collab</li>
-          <li>AI-augmented workflow</li>
-          <li>Fast learner</li>
-          <li>Team player</li>
         </ul>
       </div>
     </div>
@@ -630,7 +756,7 @@ footer a:hover{color:var(--accent);}
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  // PROFILE PHOTO — show placeholder if image fails
+  // PROFILE PHOTO
   const profileImg = document.querySelector('.profile-photo');
   const placeholder = document.getElementById('profile-placeholder');
   if (profileImg) {
